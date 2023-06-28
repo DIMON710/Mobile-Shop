@@ -1,0 +1,22 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 20px;
+  height: 100%;
+  @media (max-width: 680px) {
+    width: 100%;
+  }
+  input {
+    padding: 10px;
+  }
+  button {
+    border: 1px solid #646cff;
+    transition: 0.2s background-color ease-in-out;
+    &:hover {
+      background-color: #111;
+    }
+  }
+}
