@@ -30,7 +30,7 @@ const Basket = () => {
                     <>
                         <div className={cl.products}>
                             <div className={cl.product}>{basket.map(item => {
-                                total+=item.price;
+                                total+=Number(item.price);
                                 return <Product key={item.id} item={item} buttonFunc={removeBasket} btnName={'Удалить'}/>
                             })}
                             </div>

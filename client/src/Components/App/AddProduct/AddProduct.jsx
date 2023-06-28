@@ -1,22 +1,35 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import cl from './AddProduct.module.scss';
 import {Products} from "../../../context/index.js";
+import productsServices from "../../../API/productsServices.js";
 const AddProduct = () => {
     const [newProduct, setNewProduct] = useState({title: '', description: '', price: ''});
     const [newProductPhoto, setNewProductPhoto] = useState(null);
     const [productValue, setProductValue] = useContext(Products);
-
+    const [validation, setValidation] = useState(true);
     const addProduct = (e) => {
         e.preventDefault();
-        if (newProduct.title !== '' && newProduct.description !== '' && newProduct.price !== '') {
+        if (newProduct.title !== '' && newProduct.description !== '' && !isNaN(newProduct.price) && newProductPhoto) {
+            setValidation(true)
             const formData = new FormData();
-            formData.append('img', newProductPhoto);
-            formData.append('test', 'ok');
-            console.log(newProductPhoto)
-                // req
-            // setNewProductPhoto(null)
-            setProductValue(prevState => ([...prevState, {...newProduct, id: Date.now()}]))
-            setNewProduct({title: '', description: '', price: ''})
+            formData.append('image', newProductPhoto);
+            Object.keys(newProduct).forEach((key) => {
+                formData.append(key, newProduct[key]);
+            });
+            const id = Date.now()
+            setProductValue(prevState => ([...prevState, {...newProduct, id}]))
+            try {
+                productsServices.addNew(formData).then(() => {
+                    productsServices.getAll().then((res) => {
+                        setProductValue(res.data.rows)
+                    })
+                })
+                setNewProduct({title: '', description: '', price: ''})
+            } catch (e) {
+                console.log(e)
+            }
+        } else {
+            setValidation(false)
         }
     }
     return (
@@ -36,7 +49,7 @@ const AddProduct = () => {
             <input onChange={(e) => {
                 setNewProduct(prevState => ({...prevState, price: e.target.value}))
             }} value={newProduct.price} type="text" placeholder="Цена"/>
-            <button type="submit">Добавить</button>
+            <button style={!validation ? {border: '1px solid red'} : {}} type="submit">Добавить</button>
         </form>
     );
 };

@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import cl from './Product.module.scss'
 import {useNavigate} from "react-router-dom";
-import {BasketButton, BasketProduct} from "../../../context/index.js";
-const Product = ({item, buttonFunc, btnName}) => {
+import {BasketButton, BasketProduct, Products} from "../../../context/index.js";
+import productsServices from "../../../API/productsServices.js";
+const Product = ({item, buttonFunc, btnName, id, admin}) => {
     const params = useNavigate()
     const [basketButton, setBasketButton] = useContext(BasketButton)
+    const [productValue, setProductValue] = useContext(Products);
     const [inBasket, setInBasket] = useState(false)
     const btnClick = () => {
         buttonFunc(item.id)
@@ -24,10 +26,22 @@ const Product = ({item, buttonFunc, btnName}) => {
         } else {
             setInBasket(false);
         }
-    })
+    }, [basketButton])
+
+    const removeProduct = (id) => {
+        try {
+            productsServices.remove(id)
+            const filteredProducts = productValue.filter(product => product.id !== id)
+            setProductValue(filteredProducts)
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <div className={cl.product}>
-            <div className={cl.photo}><img src={item.img} alt={item.title}/></div>
+            {admin && <div className={cl.remove} onClick={() => removeProduct(id)}>x</div>}
+            <div className={cl.photo}><img src={`http://localhost:3000/images/${item.img}`} alt={item.title}/></div>
             <h4 onClick={() => params(`/catalog/${item.id}`)}>{item.title}</h4>
             <p>{item.description}</p>
             <h3>{item.price} UAH</h3>

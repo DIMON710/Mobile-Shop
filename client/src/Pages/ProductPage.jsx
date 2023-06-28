@@ -1,21 +1,29 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Products} from "../context/index.js";
+import productsServices from "../API/productsServices.js";
 
 const ProductPage = () => {
-    const [products] = useContext(Products)
+    const [isLoading, setIsLoading] = useState(true)
+    const [product, setProduct] = useState(true)
     const params = useParams()
-    const productId = params.id
-    const product = products[products.findIndex(i => i.id.toString() === productId)]
-    return (
-        <div>
+    useEffect(() => {
+        productsServices.getOne(params.id).then((res) => {
+            setProduct(res.data)
+            setIsLoading(false)
+        })
+    }, [])
+    return (<>
+        {!isLoading && <div>
             <h1>{product.title}</h1>
-            <div style={{width: 300, maxHeight: 200}}><img style={{width: 300, maxHeight: 400, objectFit: 'contain'}} src={product.img} alt={product.title}/></div>
+            <div style={{width: 300, maxHeight: 200}}><img style={{width: 300, maxHeight: 400, objectFit: 'contain'}}
+                                                           src={`http://localhost:3000/images/${product.img}`}
+                                                           alt={product.title}/></div>
             <h4>{product.title}</h4>
             <p>{product.description}</p>
             <h3>{product.price} UAH</h3>
-        </div>
-    );
+        </div>}
+    </>);
 };
 
 export default ProductPage;
