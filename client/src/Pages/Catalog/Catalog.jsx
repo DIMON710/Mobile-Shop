@@ -14,6 +14,11 @@ const Catalog = () => {
         try {
             productsServices.getAll().then((products) => {
                 setProductValue(products.data.rows);
+                if (localStorage.getItem('basketProducts')) {
+                    const basketProductsId = JSON.parse(localStorage.getItem('basketProducts'))
+                    const basketProducts = products.data.rows.filter(product => basketProductsId.includes(product.id))
+                    setBasketProduct(basketProducts)
+                }
             });
         } catch (e) {
             console.log(e);

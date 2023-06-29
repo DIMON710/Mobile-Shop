@@ -7,8 +7,8 @@ import {CSSTransition} from "react-transition-group";
 const Basket = () => {
     const [active, setActive] = useState(false);
     const refBasket = useRef(null);
-    let total = 0;
     const [basket, setBasket] = useContext(BasketProduct);
+    let total = 0;
     const removeBasket = (id) => {
         if ((basket.findIndex(item => item.id === id) !== -1))
             setBasket(basket.filter(item => item.id !== id));

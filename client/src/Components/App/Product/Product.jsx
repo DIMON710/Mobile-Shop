@@ -11,12 +11,32 @@ const Product = ({item, buttonFunc, btnName, id, admin}) => {
     const btnClick = () => {
         buttonFunc(item.id)
         if (btnName === 'Удалить') {
-            if (basketProduct.findIndex(i => i.id === item.id) !== -1)
+            if (basketProduct.findIndex(i => i.id === item.id) !== -1) {
                 setBasketProduct([...basketProduct].filter(i => i.id !== item.id));
+                if (localStorage.getItem('basketProducts')) {
+                    const res = JSON.parse(localStorage.getItem('basketProducts'));
+                    const req = JSON.stringify(res.filter(product => product !== item.id));
+                    if (req.length === 2) {
+                        localStorage.removeItem('basketProducts');
+                    } else {
+                        localStorage.setItem('basketProducts', req);
+                    }
+                }
+            }
         }
         if (btnName !== 'Удалить'){
-            if (basketProduct.findIndex(i => i.id === item.id) === -1)
+            if (basketProduct.findIndex(i => i.id === item.id) === -1) {
                 setBasketProduct([item, ...basketProduct]);
+                if (localStorage.getItem('basketProducts')) {
+                    const res = JSON.parse(localStorage.getItem('basketProducts'));
+                    res.push(item.id);
+                    const req = JSON.stringify(res);
+                    localStorage.setItem('basketProducts', req);
+                } else {
+                    const req = JSON.stringify([item.id]);
+                    localStorage.setItem('basketProducts', req);
+                }
+            }
         }
 
     }
