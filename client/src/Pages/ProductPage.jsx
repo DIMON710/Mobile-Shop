@@ -16,9 +16,12 @@ const ProductPage = () => {
     return (<>
         {!isLoading && <div>
             <h1>{product.title}</h1>
-            <div style={{width: 300, maxHeight: 200}}><img style={{width: 300, maxHeight: 400, objectFit: 'contain'}}
-                                                           src={`http://localhost:3000/images/${product.img}`}
-                                                           alt={product.title}/></div>
+            <div style={{width: 300, maxHeight: 200}}>
+                <img style={{width: 300, maxHeight: 400, objectFit: 'contain'}}
+                   src={`http://localhost:3000/images/${product.img}`}
+                   alt={product.title}
+                />
+            </div>
             <h4>{product.title}</h4>
             <p>{product.description}</p>
             <h3>{product.price} UAH</h3>
