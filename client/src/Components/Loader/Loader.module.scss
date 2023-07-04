@@ -1,0 +1,31 @@
+.wrapper {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.loader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #535bf2;
+  margin: 10px auto;
+  animation: load ease-in-out infinite 1s;
+}
+@keyframes load {
+  0% {
+    transform: translateX(0%) scale(0.7);
+  }
+  25% {
+    transform: translateX(50%) scale(1.1);
+  }
+  50% {
+    transform: translateX(0%) scale(0.7);
+  }
+  75% {
+    transform: translateX(-50%) scale(1.1);
+  }
+  100% {
+    transform: translateX(0%) scale(0.7);
+  }
+}

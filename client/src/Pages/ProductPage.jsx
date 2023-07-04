@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {Products} from "../context/index.js";
 import productsServices from "../API/productsServices.js";
+import Loader from "../Components/Loader/Loader.jsx";
 
 const ProductPage = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -14,7 +14,7 @@ const ProductPage = () => {
         })
     }, [])
     return (<>
-        {!isLoading && <div>
+        {isLoading ? <Loader/> : <div>
             <h1>{product.title}</h1>
             <div style={{width: 300, maxHeight: 200}}>
                 <img style={{width: 300, maxHeight: 400, objectFit: 'contain'}}

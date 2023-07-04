@@ -29,7 +29,7 @@ const Product = ({item, buttonFunc, btnName, id, admin}) => {
                 setBasketProduct([item, ...basketProduct]);
                 if (localStorage.getItem('basketProducts')) {
                     const res = JSON.parse(localStorage.getItem('basketProducts'));
-                    res.push(item.id);
+                    res.unshift(item.id);
                     const req = JSON.stringify(res);
                     localStorage.setItem('basketProducts', req);
                 } else {
@@ -62,7 +62,7 @@ const Product = ({item, buttonFunc, btnName, id, admin}) => {
         <div className={cl.product}>
             {admin && <div className={cl.remove} onClick={() => removeProduct(id)}>x</div>}
             <div className={cl.photo}><img src={`http://localhost:3000/images/${item.img}`} alt={item.title}/></div>
-            <h4 onClick={() => params(`/catalog/${item.id}`)}>{item.title}</h4>
+            <h4 onClick={() => params(`/product/${item.id}`)}>{item.title}</h4>
             <p>{item.description}</p>
             <h3>{item.price} UAH</h3>
             <button style={inBasket && btnName!== 'Удалить' ? {border: '1px solid green'} : {}} onClick={btnClick}>{inBasket && btnName!== 'Удалить' ? 'В корзине' : btnName}</button>

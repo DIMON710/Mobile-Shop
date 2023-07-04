@@ -4,12 +4,14 @@ import './transitionCatalog.scss';
 import {Products} from "../../../context/index.js";
 import productsServices from "../../../API/productsServices.js";
 import {CSSTransition} from "react-transition-group";
+import {useParams} from "react-router-dom";
 const AddProduct = ({admin}) => {
     const [newProduct, setNewProduct] = useState({title: '', description: '', price: ''});
     const [newProductPhoto, setNewProductPhoto] = useState(null);
     const [productValue, setProductValue] = useContext(Products);
     const [validation, setValidation] = useState(true);
     const refProduct = useRef(null);
+    const {page} = useParams();
     const addProduct = (e) => {
         e.preventDefault();
         if (newProduct.title !== '' && newProduct.description !== '' && !isNaN(newProduct.price) && newProductPhoto) {
@@ -19,11 +21,9 @@ const AddProduct = ({admin}) => {
             Object.keys(newProduct).forEach((key) => {
                 formData.append(key, newProduct[key]);
             });
-            const id = Date.now()
-            setProductValue(prevState => ([...prevState, {...newProduct, id}]))
             try {
                 productsServices.addNew(formData).then(() => {
-                    productsServices.getAll().then((res) => {
+                    productsServices.getAllPage(page).then((res) => {
                         setProductValue(res.data.rows)
                     })
                 })
@@ -45,12 +45,16 @@ const AddProduct = ({admin}) => {
         >
             <div ref={refProduct}>
                 <form className={cl.form} onSubmit={addProduct}>
-                    <label>Фото <input type="file" accept="image/*" onChange={ e => {
-                        const file = e.target.files[0];
-                        if (file.type.split('/')[0] === 'image') {
-                            setNewProductPhoto(file)
-                        }
-                    }}/></label>
+                    <div className={cl.photo}>
+                        <button type="button" className={`${cl.photo__btn} ${newProductPhoto && cl.active}`}>{newProductPhoto ? newProductPhoto.name : 'Добавить фото'}</button>
+                        <input type="file" accept="image/*" onChange={ e => {
+                            console.log(e.target.files[0].name)
+                            const file = e.target.files[0];
+                            if (file.type.split('/')[0] === 'image') {
+                                setNewProductPhoto(file)
+                            }
+                        }}/>
+                    </div>
                     <input onChange={(e) => {
                         setNewProduct(prevState => ({...prevState, title: e.target.value}))
                     }} value={newProduct.title} type="text" placeholder="Название"/>

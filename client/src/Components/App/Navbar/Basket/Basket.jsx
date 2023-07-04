@@ -1,11 +1,14 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import cl from './Basket.module.scss'
 import './transitionBasket.scss'
 import Product from "../../Product/Product.jsx";
 import {BasketProduct} from "../../../../context/index.js";
 import {CSSTransition} from "react-transition-group";
+import productsServices from "../../../../API/productsServices.js";
+import Loader from "../../../Loader/Loader.jsx";
 const Basket = () => {
     const [active, setActive] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const refBasket = useRef(null);
     const [basket, setBasket] = useContext(BasketProduct);
     let total = 0;
@@ -16,6 +19,17 @@ const Basket = () => {
             if (basket.length === 1) setActive(false)
         }, 300)
     }
+    useEffect(() => {
+        if (localStorage.getItem('basketProducts')) {
+            const basketProductsId = JSON.parse(localStorage.getItem('basketProducts'))
+            productsServices.getSome(basketProductsId).then(products => {
+                setBasket(products.data);
+                setIsLoading(false)
+            });
+        } else {
+            setIsLoading(false)
+        }
+    }, []);
     return (
         <>
             <button className={`${basket.length > 0 && cl.basketBtn}`} onClick={() => setActive(!active)}>
@@ -48,7 +62,7 @@ const Basket = () => {
                                         <button style={{width: '30%'}}><h3>Оформить заказ</h3></button>
                                     </div>
                                 </div>
-                            </> :
+                            </> : isLoading ? <Loader/> :
                             <p>Корзина пуста</p>}
                     </div>
                 </div>
