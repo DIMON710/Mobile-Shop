@@ -34,7 +34,7 @@ const Catalog = () => {
         } catch (e) {
             console.error(e);
         }
-    }, [page, productValue]);
+    }, [page]);
     const basketFunc = (id) => {
         const index = productValue.findIndex(item => item.id === id);
         if ((basketProduct.findIndex(item => item.id === id) === -1))

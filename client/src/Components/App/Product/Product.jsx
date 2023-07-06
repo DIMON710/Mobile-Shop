@@ -61,7 +61,7 @@ const Product = ({item, buttonFunc, btnName, id, admin}) => {
     return (
         <div className={cl.product}>
             {admin && <div className={cl.remove} onClick={() => removeProduct(id)}>x</div>}
-            <div className={cl.photo}><img src={`http://localhost:3000/images/${item.img}`} alt={item.title}/></div>
+            <div className={cl.photo}><img src={`http://178.165.38.121:5000/images/${item.img}`} alt={item.title}/></div>
             <h4 onClick={() => params(`/product/${item.id}`)}>{item.title}</h4>
             <p>{item.description}</p>
             <h3>{item.price} UAH</h3>

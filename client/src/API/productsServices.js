@@ -1,22 +1,26 @@
 import axios from 'axios';
+const CLIENT = 'http://178.165.38.121:5000'
 export default class productsServices {
     static async getAll () {
-        return await axios.get('http://localhost:3000/products/');
+        return await axios.get(`${CLIENT}/products/`);
     }
     static async getAllPage (page) {
         page = page || 1
-        return await axios.get('http://localhost:3000/products/page/' + page);
+        return await axios.get(`${CLIENT}/products/page/` + page);
     }
     static async getOne (id) {
-        return await axios.get('http://localhost:3000/products/' + id);
+        return await axios.get(`${CLIENT}/products/` + id);
     }
     static async getSome (ids) {
-        return await axios.post('http://localhost:3000/products/basket/', {ids});
+        return await axios.post(`${CLIENT}/products/basket/`, {ids});
     }
     static async addNew (product) {
-        return await axios.post('http://localhost:3000/products/add-new/', product);
+        return await axios.post(`${CLIENT}/products/add-new/`, product);
     }
     static async remove (id) {
-        return await axios.delete('http://localhost:3000/products/remove/' + id);
+        return await axios.delete(`${CLIENT}/products/remove/` + id);
+    }
+    static async pay ({amount, description}) {
+        return await axios.post(`${CLIENT}/pay/`, {amount, description});
     }
 }

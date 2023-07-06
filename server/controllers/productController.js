@@ -5,7 +5,6 @@ const FileService = require("../fileService.js");
 const getAllPage = async (req, res) => {
     try {
         const {page} = req.params;
-        console.log(page)
         const products = await productService.getAllPage(page);
         return res.send(products)
     } catch (e) {
@@ -36,9 +35,7 @@ const getOne = async (req, res) => {
 }
 const getSome = async (req, res) => {
         try {
-            console.log(req)
             const {ids} = req.body;
-            console.log(ids)
             if (ids) {
                 const products = await productService.getSome(ids);
                 return res.send(products);

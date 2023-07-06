@@ -18,7 +18,7 @@ const ProductPage = () => {
             <h1>{product.title}</h1>
             <div style={{width: 300, maxHeight: 200}}>
                 <img style={{width: 300, maxHeight: 400, objectFit: 'contain'}}
-                   src={`http://localhost:3000/images/${product.img}`}
+                   src={`http://178.165.38.121:5000/images/${product.img}`}
                    alt={product.title}
                 />
             </div>

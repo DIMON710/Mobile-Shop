@@ -30,6 +30,12 @@ const Basket = () => {
             setIsLoading(false)
         }
     }, []);
+    const pay = () => {
+        const description = basket.reduce((sum, product) => sum += product.title + ', ', '').slice(0, -2);
+        productsServices.pay({amount: total, description}).then(r => {
+            window.open(r.data, '_blank');
+        })
+    }
     return (
         <>
             <button className={`${basket.length > 0 && cl.basketBtn}`} onClick={() => setActive(!active)}>
@@ -59,7 +65,7 @@ const Basket = () => {
                                     </div>
                                     <div className={cl.btns}>
                                         <h3><strong>{total} UAH</strong></h3>
-                                        <button style={{width: '30%'}}><h3>Оформить заказ</h3></button>
+                                        <button onClick={pay} style={{width: '30%'}}><h3>Оформить заказ</h3></button>
                                     </div>
                                 </div>
                             </> : isLoading ? <Loader/> :
