@@ -8,4 +8,5 @@ const Products = sequelize.define('products', {
     price: {type: DataTypes.INTEGER},
     img: {type: DataTypes.STRING}
 })
+
 module.exports = {Products}

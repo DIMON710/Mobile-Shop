@@ -1,7 +1,7 @@
 import React, {useContext, useRef, useState} from 'react';
 import cl from './AddProduct.module.scss';
 import './transitionCatalog.scss';
-import {Products} from "../../../context/index.js";
+import {Products} from "../../../context/index.jsx";
 import productsServices from "../../../API/productsServices.js";
 import {CSSTransition} from "react-transition-group";
 import {useParams} from "react-router-dom";

@@ -1,5 +1,5 @@
 // vite.config.js
-import { defineConfig } from "file:///D:/%D0%94%D0%B8%D0%BC%D1%8B%D0%BD%D0%B0%20%D0%BF%D0%B0%D0%BF%D0%BA%D0%B0/%D0%9A%D0%A3%D0%A0%D0%A1%D0%AB%20%D0%98%D0%BB%D1%8E%D1%85%D0%B8/Mobile-Shop/client/node_modules/vite/dist/node/index.js";
+import { defineConfig } from "file:///D:/%D0%94%D0%B8%D0%BC%D1%8B%D0%BD%D0%B0%20%D0%BF%D0%B0%D0%BF%D0%BA%D0%B0/%D0%9A%D0%A3%D0%A0%D0%A1%D0%AB%20%D0%98%D0%BB%D1%8E%D1%85%D0%B8/Mobile-Shop/client/node_modules/vite/dist/node/index.jsx";
 import react from "file:///D:/%D0%94%D0%B8%D0%BC%D1%8B%D0%BD%D0%B0%20%D0%BF%D0%B0%D0%BF%D0%BA%D0%B0/%D0%9A%D0%A3%D0%A0%D0%A1%D0%AB%20%D0%98%D0%BB%D1%8E%D1%85%D0%B8/Mobile-Shop/client/node_modules/@vitejs/plugin-react/dist/index.mjs";
 var vite_config_default = defineConfig({
   plugins: [react()]

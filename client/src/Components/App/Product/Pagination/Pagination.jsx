@@ -2,7 +2,7 @@ import React from 'react';
 import cl from "./Pagination.module.scss";
 import {useNavigate} from "react-router-dom";
 
-const Pagination = ({currentPage, totalPage}) => {
+const Pagination = ({currentPage, totalPage, endpoint}) => {
     const navigate = useNavigate();
     const pages = [];
     for (let i = 0; i < totalPage; i++) {
@@ -11,7 +11,7 @@ const Pagination = ({currentPage, totalPage}) => {
     return (
         <div className={cl.wrapper}>
             {pages.map((page) => (
-                <button key={page} onClick={() => navigate(`/${page}`)} style={page == currentPage ? {borderColor: '#646cff'} : {}} className={cl.pagination}>{page}</button>
+                <button key={page} onClick={() => navigate(`${endpoint + page}`)} style={page == currentPage ? {borderColor: '#646cff'} : {}} className={cl.pagination}>{page}</button>
             ))}
         </div>
     );

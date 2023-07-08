@@ -23,4 +23,10 @@ export default class productsServices {
     static async pay ({amount, description}) {
         return await axios.post(`${CLIENT}/pay/`, {amount, description});
     }
+    static async getPay (page) {
+        return await axios.get(`${CLIENT}/pay/${page}`);
+    }
+    static async getAllPay () {
+        return await axios.get(`${CLIENT}/pay/all`);
+    }
 }

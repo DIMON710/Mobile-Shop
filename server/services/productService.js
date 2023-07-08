@@ -1,28 +1,48 @@
 const {Products} = require("../models/productsModel");
 
 const getAll = async () => {
-    return await Products.findAndCountAll()
+    try {
+        return await Products.findAndCountAll()
+    } catch (e) {
+        console.error(e)
+    }
 }
 const getAllPage = async (page) => {
-    if (isNaN(page) || page < 1) {
-        page = 1
+    try {
+        if (isNaN(page) || page < 1) {
+            page = 1
+        }
+        const limit = 4;
+        const offset = page * limit - limit
+        return await Products.findAndCountAll({limit, offset})
+    } catch (e) {
+        console.error(e)
     }
-    const limit = 4;
-    const offset = page * limit - limit
-    return await Products.findAndCountAll({limit, offset})
 }
 const getOne = async (id) => {
-    if (id) {
-        return await Products.findOne({where: {id}});
+    try {
+        if (id) {
+            return await Products.findOne({where: {id}});
+        }
+    } catch (e) {
+        console.error(e)
     }
 }
 const getSome = async (ids) => {
-    if (ids) {
-        return await Products.findAll({where: {id: ids}});
+    try {
+        if (ids) {
+            return await Products.findAll({where: {id: ids}});
+        }
+    } catch (e) {
+        console.error(e)
     }
 }
 const addNew = async (product) => {
-    return await Products.create({...product})
+    try {
+        return await Products.create({...product})
+    } catch (e) {
+        console.error(e)
+    }
 }
 
 module.exports = {getAll, getAllPage, getOne, getSome, addNew}

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import Product from "../../Components/App/Product/Product.jsx";
-import {BasketProduct, Products} from "../../context/index.js";
+import {Admin, BasketProduct, Products} from "../../context/index.jsx";
 import cl from "./Catalog.module.scss";
 import "../../Components/App/AddProduct/transitionCatalog.scss";
 import productsServices from "../../API/productsServices.js";
@@ -12,7 +12,8 @@ import Pagination from "../../Components/App/Product/Pagination/Pagination.jsx";
 const Catalog = () => {
     const [productValue, setProductValue] = useContext(Products);
     const [basketProduct, setBasketProduct] = useContext(BasketProduct);
-    const [admin, setAdmin] = useState(false)
+    const [admin, setAdmin] = useContext(Admin)
+    const [changeProducts, setChangeProducts] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const {page} = useParams();
@@ -42,17 +43,27 @@ const Catalog = () => {
     }
     return (
         <div className={cl.catalog}>
-            <button style={{position: 'absolute', top: 10, left: 20}} onClick={() => setAdmin(prevState => !prevState)}>admin?</button>
-            <AddProduct admin={admin}/>
+            <div style={{position: 'absolute', top: 10, left: 20, display: 'flex', gap: 10}}>
+                {admin ? <button onClick={() => {
+                    setAdmin(false)
+                    localStorage.removeItem('admin')
+                }}>Выйти</button> : <button onClick={() => {
+                    navigate('/admin');
+                }}>Админка</button>}
+                {admin && <button onClick={() => {
+                    setChangeProducts(prevState => !prevState)
+                }}>Изменить товары</button>}
+            </div>
+            <AddProduct admin={changeProducts}/>
             {isLoading ? <Loader/>
             :   <div>
                     <div className={cl.productList}>
                         {productValue.length !== 0 && productValue.map(item => (
-                            <Product key={item.id} id={item.id} admin={admin} buttonFunc={basketFunc} item={item}
+                            <Product key={item.id} id={item.id} changeProducts={changeProducts} buttonFunc={basketFunc} item={item}
                                      btnName={'В корзину'}/>
                         ))}
                     </div>
-                    <Pagination currentPage={page} totalPage={totalPage}/>
+                    <Pagination currentPage={page} totalPage={totalPage} endpoint={'/'}/>
                 </div>}
         </div>
     )

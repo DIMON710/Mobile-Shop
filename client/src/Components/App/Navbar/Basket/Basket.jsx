@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import cl from './Basket.module.scss'
 import './transitionBasket.scss'
 import Product from "../../Product/Product.jsx";
-import {BasketProduct} from "../../../../context/index.js";
+import {BasketProduct} from "../../../../context/index.jsx";
 import {CSSTransition} from "react-transition-group";
 import productsServices from "../../../../API/productsServices.js";
 import Loader from "../../../Loader/Loader.jsx";

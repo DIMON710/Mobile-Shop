@@ -1,5 +1,6 @@
-const LiqPay = require('../services/liqpay.js');
+const LiqPay = require('../libraries/liqpay.js');
 const uuid = require('uuid');
+const payService = require('../services/payService.js');
 let id = ''
 const public_key = process.env.PUBLIC_KEY
 const private_key = process.env.PRIVATE_KEY
@@ -27,21 +28,47 @@ const pay = (req, res) => {
 }
 const checkPay = (req, res) => {
     try {
-        console.log('ok')
         const {id} = req.params;
-        console.log(id)
         const liqpay = new LiqPay(public_key, private_key);
         liqpay.api("request", {
             "action"   : "status",
             "version"  : "3",
             order_id: `${id}`
-        }, function( json ){
-            console.log( json.status );
-            res.send(json)
+        }, async function( json ){
+            console.log( json );
+            const newOrder = await payService.addNew({
+                payment_id: json.payment_id,
+                order_id: json.order_id,
+                description: json.description,
+                currency: json.currency,
+                amount: json.amount,
+                status: json.status
+            })
+            console.log(newOrder);
+            return res.sendStatus(200)
         });
     } catch (e) {
         console.error(e)
         res.send(e)
     }
 }
-module.exports = {pay, checkPay}
+const getAllPay = async (req, res) => {
+    try {
+        const orders = await payService.getAll()
+        return res.send(orders)
+    } catch (e) {
+        console.error(e)
+        return res.send(e)
+    }
+}
+const getPay = async (req, res) => {
+    try {
+        const {page} = req.params;
+        const orders = await payService.getPagination(page)
+        return res.send(orders)
+    } catch (e) {
+        console.error(e)
+        return res.send(e)
+    }
+}
+module.exports = {pay, checkPay, getAllPay, getPay}
