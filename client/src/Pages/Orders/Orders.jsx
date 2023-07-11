@@ -39,14 +39,24 @@ const Orders = () => {
         <div style={{paddingBottom: '5px', display: 'flex', flexDirection: 'column', gap: 15}}>
                 {isLoading ? <Loader/> : orders.map(order => (
                     <div className={cl.orders} key={order.id}>
-                        <div><h4 className={cl.id}>ID: {order.payment_id ? order.payment_id : order.order_id}</h4>
-                            <h4>Статус оплаты: {order.status}</h4></div>
-                        <div className={cl.price}><h4>Цена: {order.amount} {order.currency}</h4></div>
-                        <div><h4>Описание: {order.description}</h4></div>
-                        <div><h4>Доставка: {order.delivery}</h4></div>
-                        <label>Отправлен <input type="checkbox" checked={order.complete} onChange={() => {
-                            changeOrder(order);
-                        }}/></label>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <h4 className={cl.id}>ID: {order.payment_id ? order.payment_id : order.order_id}</h4>
+                            {/*<label>Отправлен <input type="checkbox" checked={order.complete} onChange={() => {*/}
+                            {/*    changeOrder(order);*/}
+                            {/*}}/></label>*/}
+                            <div onClick={() => {
+                                changeOrder(order);
+                            }} className={`${cl.checkbox} ${order.complete ? cl.active : ''}`} ></div>
+                        </div>
+                        <div style={{display: 'flex', gap: 15, alignItems: 'center'}}>
+                            <div className={cl.image}><img src="http://178.165.38.121:5000/images/58fbe1e2-bcea-4464-9d23-ff836109c3a5.jpg" alt=""/></div>
+                            <div className={cl.description}>
+                                <div><h4>Цена: {order.amount} {order.currency}</h4></div>
+                                <div><h4>Статус оплаты: {order.status}</h4></div>
+                                <div><h4>Товар: {order.description}</h4></div>
+                                <div><h4>Адрес: {order.delivery}</h4></div>
+                            </div>
+                        </div>
                         <h4 className={cl.date}>Дата: {order.date}</h4>
                     </div>
                 ))}
