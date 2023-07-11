@@ -1,0 +1,29 @@
+.orders {
+  border: 1px solid #646cff;
+  padding: 15px;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 15px;
+  div {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #2c42a4;
+    padding: 10px;
+    border-radius: 8px;
+    &:first-child {
+      border: 0;
+    }
+  }
+  .id {
+    text-align: left;
+  }
+  .date {
+    text-align: right;
+  }
+  .price {
+    text-align: right;
+  }
+}

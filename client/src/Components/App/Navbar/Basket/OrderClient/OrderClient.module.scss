@@ -1,78 +1,73 @@
-.basket {
-  width: 100%;
-  min-height: 100%;
+.wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  cursor: pointer;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
   z-index: 1;
-  .body {
+  .order {
+    cursor: default;
     position: absolute;
+    padding: 25px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #111;
     min-width: 70%;
     max-width: 90%;
     min-height: 560px;
     height: 80%;
     border-radius: 8px;
-    padding: 25px;
-    cursor: default;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    align-content: space-around;
-    & > p {
-      font-size: 1.2em;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .title {
-      display: flex;
-      justify-content: space-between;
-    }
-
+    background-color:  #111;
     h2 {
       font-size: 2em;
-      text-align: start;
+      @media (max-width: 500px) {
+        font-size: 1.5em;
+      }
     }
   }
-}
-.products {
-  height: 90%;
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  width: 100%;
-  gap: 10px;
-  justify-content: space-between;
-}
-.product {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  overflow-y: auto;
-}
-.btns {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-  justify-content: flex-end;
-  @media (max-width: 1000px) {
-    button {
-      flex: 1;
+  form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 25px;
+    flex-wrap: wrap;
+    max-width: 500px;
+    label {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      gap: 10px;
+      width: 100%;
     }
-    h3 {
-      flex: 1;
+    input {
+      padding: 10px 0 10px 5px;
+      width: 100%;
+    }
+    div {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+      @media (max-width: 700px) {
+        flex-direction: column;
+        gap: 25px;
+      }
+    }
+    button {
+      min-width: 280px;
+      width: 100%;
+      margin-top: 10px;
     }
   }
 }
 .close {
   width: 30px;
   height: 30px;
+  margin-left: auto;
   border-radius: 50%;
   border: 2px solid #fff;
   position: relative;
@@ -116,8 +111,4 @@
     transform: translate(-50%, -50%) rotate(45deg);
     transition: 0.3s all ease-in-out;
   }
-}
-.basketBtn {
-  border: 1px solid green;
-  transition: 0.3s border ease-in-out;
 }
