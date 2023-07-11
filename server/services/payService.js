@@ -19,19 +19,10 @@ const getPagination = async (page) => {
         page = page || 1
         const limit = 10;
         const offset = page * limit - limit
-        const ids = await Orders.findAll()
-        console.log(ids)
-        return await Orders.findAndCountAll({order: [['date', 'DESC']], limit, offset})
-    } catch (e) {
-        console.error(e)
-    }
-}
-const changeOrder = async (id, params) => {
-    try {
-        return await Orders.update({...params}, {where: {order_id: id}});
+        return await Orders.findAndCountAll({order: [['id', 'DESC']], limit, offset})
     } catch (e) {
         console.error(e)
     }
 }
 
-module.exports = {addNew, getAll, getPagination, changeOrder}
+module.exports = {addNew, getAll, getPagination}

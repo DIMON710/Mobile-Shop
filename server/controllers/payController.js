@@ -4,9 +4,9 @@ const payService = require('../services/payService.js');
 let id = ''
 const public_key = process.env.PUBLIC_KEY
 const private_key = process.env.PRIVATE_KEY
-const pay = async (req, res) => {
+const pay = (req, res) => {
     try {
-        const {amount, description, delivery} = req.body;
+        const {amount, description} = req.body;
         const liqpay = new LiqPay(public_key, private_key)
         id = uuid.v4();
         const params = {
@@ -14,22 +14,12 @@ const pay = async (req, res) => {
             amount,
             currency: 'UAH',
             description,
-            order_id: id,
+            order_id: `${id}`,
             version: '3',
             server_url: `http://178.165.38.121:5000/pay/check/${id}`,
             result_url: "http://178.165.38.121:3000/1"
         }
         const obj = liqpay.cnb_object(params);
-        const newOrder = await payService.addNew({
-            order_id: id,
-            description,
-            currency: 'UAH',
-            amount,
-            status: 'processing',
-            date: Date.now(),
-            delivery,
-        });
-        console.log(newOrder)
         res.send(`https://www.liqpay.ua/api/3/checkout?data=${obj.data}&signature=${obj.signature}`)
     } catch (e) {
         console.error(e)
@@ -43,14 +33,17 @@ const checkPay = (req, res) => {
         liqpay.api("request", {
             "action"   : "status",
             "version"  : "3",
-            order_id: id
+            order_id: `${id}`
         }, async function( json ){
             console.log( json );
-            const newOrder = await payService.changeOrder(id, {
+            const newOrder = await payService.addNew({
                 payment_id: json.payment_id,
-                status: json.status,
-                date: json.end_date,
-            });
+                order_id: json.order_id,
+                description: json.description,
+                currency: json.currency,
+                amount: json.amount,
+                status: json.status
+            })
             console.log(newOrder);
             return res.sendStatus(200)
         });
@@ -59,18 +52,6 @@ const checkPay = (req, res) => {
         res.send(e)
     }
 }
-
-const changeOrder = async (req, res) => {
-    try {
-        const {id, complete} = req.body;
-        const ChangedOrder = await payService.changeOrder(id, {complete});
-        return res.sendStatus(201)
-    } catch (e) {
-        console.log(e)
-        res.send(e)
-    }
-}
-
 const getAllPay = async (req, res) => {
     try {
         const orders = await payService.getAll()
@@ -90,4 +71,4 @@ const getPay = async (req, res) => {
         return res.send(e)
     }
 }
-module.exports = {pay, checkPay, getAllPay, getPay, changeOrder}
+module.exports = {pay, checkPay, getAllPay, getPay}

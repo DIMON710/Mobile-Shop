@@ -20,14 +20,11 @@ export default class productsServices {
     static async remove (id) {
         return await axios.delete(`${CLIENT}/products/remove/` + id);
     }
-    static async pay ({amount, description, delivery}) {
-        return await axios.post(`${CLIENT}/pay/`, {amount, description, delivery});
+    static async pay ({amount, description}) {
+        return await axios.post(`${CLIENT}/pay/`, {amount, description});
     }
     static async getPay (page) {
         return await axios.get(`${CLIENT}/pay/${page}`);
-    }
-    static async changeOrder ({id, complete}) {
-        return await axios.put(`${CLIENT}/pay/order`, {id, complete: !complete});
     }
     static async getAllPay () {
         return await axios.get(`${CLIENT}/pay/all`);

@@ -1,8 +1,8 @@
 import {Navigate, Route} from "react-router-dom";
 import Catalog from "../Pages/Catalog/Catalog.jsx";
 import ProductPage from "../Pages/ProductPage.jsx";
-import Orders from "../Pages/Orders/Orders.jsx";
-import AdminAuth from "../Pages/AdminAuth/AdminAuth.jsx";
+import Orders from "../Pages/Orders.jsx";
+import AdminAuth from "../Pages/AdminAuth.jsx";
 
 export const myRoutes = [
     <Route index element={<Catalog/>}></Route>,

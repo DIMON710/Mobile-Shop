@@ -5,8 +5,8 @@ import {useNavigate} from "react-router-dom";
 const Pagination = ({currentPage, totalPage, endpoint}) => {
     const navigate = useNavigate();
     const pages = [];
-    for (let i = 1; i <= totalPage; i++) {
-        pages.push(i);
+    for (let i = 0; i < totalPage; i++) {
+        pages.push(i+1);
     }
     return (
         <div className={cl.wrapper}>

@@ -39,26 +39,15 @@ const Orders = () => {
         <div style={{paddingBottom: '5px', display: 'flex', flexDirection: 'column', gap: 15}}>
                 {isLoading ? <Loader/> : orders.map(order => (
                     <div className={cl.orders} key={order.id}>
-                        <div style={{display: 'flex', flexWrap: 'nowrap'}}>
-                            <div style={{width: 100, height: 100}}>
-                                <img style={{width: '100%', height: '100%', objectFit: 'contain'}} src="http://178.165.38.121:5000/images/ab127d2a-e01a-46f7-9923-001b2f0ee1dd.jpg"/>
-                            </div>
-                            <div className={cl.description}>
-                                <div  style={{textAlign: 'left'}}>
-                                    <h4>Описание: {order.description}</h4>
-                                    <h4>Адрес: {order.delivery}</h4>
-                                </div>
-                                <label className={cl.complete}>Отправлен <input type="checkbox" checked={order.complete} onChange={() => {
-                                    changeOrder(order);
-                                }}/></label>
-                            </div>
-                        </div>
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <h4 className={cl.id}>ID: {order.payment_id ? order.payment_id : order.order_id}</h4>
-                            <h4>Цена: {order.amount} {order.currency}</h4>
-                            <h4>Статус оплаты: {order.status}</h4>
-                            <h4 className={cl.date}>Дата: {order.date}</h4>
-                        </div>
+                        <div><h4 className={cl.id}>ID: {order.payment_id ? order.payment_id : order.order_id}</h4>
+                            <h4>Статус оплаты: {order.status}</h4></div>
+                        <div className={cl.price}><h4>Цена: {order.amount} {order.currency}</h4></div>
+                        <div><h4>Описание: {order.description}</h4></div>
+                        <div><h4>Доставка: {order.delivery}</h4></div>
+                        <label>Отправлен <input type="checkbox" checked={order.complete} onChange={() => {
+                            changeOrder(order);
+                        }}/></label>
+                        <h4 className={cl.date}>Дата: {order.date}</h4>
                     </div>
                 ))}
                 {!isLoading && orders.length === 0 && <h1>Нет заказов</h1>}
