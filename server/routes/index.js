@@ -4,6 +4,6 @@ const payRouter = require('./payRouter.js');
 const router = new Router();
 
 router.use('/products', productRouter);
-router.use('/pay', payRouter)
+router.use('/pay', payRouter);
 
 module.exports = router;
