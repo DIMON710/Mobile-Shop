@@ -3,15 +3,19 @@ import productsServices from "../../../../../API/productsServices.js";
 import cl from './OrderClient.module.scss';
 import './OrderClient.module.scss';
 import {BasketProduct} from "../../../../../context/index.jsx";
+import {v4} from 'uuid';
 const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
     const [basket, setBasket] = useContext(BasketProduct);
     const [delivery, setDelivery] = useState({city: 'Харьков', house: '', street: '', flat: '', building: ''});
     const pay = (e) => {
         e.preventDefault();
         if (delivery.city === '' || delivery.street === '' || delivery.flat === '' || delivery.house === '') return
+        const order_id = v4()
+        localStorage.setItem('order', order_id)
         const description = basket.reduce((sum, product) => sum += product.title + ', ', '').slice(0, -2);
         const newDelivery = `г. ${delivery.city}, ул. ${delivery.street}, д. ${delivery.house},${delivery.building !== '' ? ' к. ' + delivery.building + ',' : ''} кв. ${delivery.flat}`;
-        productsServices.pay({amount: total, description, delivery: newDelivery}).then(r => {
+        const img = basket.map(product => product.img)
+        productsServices.pay({amount: total, description, delivery: newDelivery, img, order_id}).then(r => {
             window.open(r.data, '_blank');
         })
     }

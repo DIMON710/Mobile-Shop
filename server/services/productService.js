@@ -28,10 +28,10 @@ const getOne = async (id) => {
         console.error(e)
     }
 }
-const getSome = async (ids) => {
+const getSome = async (params) => {
     try {
-        if (ids) {
-            return await Products.findAll({where: {id: ids}});
+        if (params) {
+            return await Products.findAll({where: {...params}});
         }
     } catch (e) {
         console.error(e)

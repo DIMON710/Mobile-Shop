@@ -14,6 +14,13 @@ const getAll = async () => {
         console.error(e)
     }
 }
+const getStatus = async (order_id) => {
+    try {
+        return await Orders.findOne({where: {order_id}})
+    } catch (e) {
+        console.error(e)
+    }
+}
 const getPagination = async (page) => {
     try {
         page = page || 1
@@ -34,4 +41,4 @@ const changeOrder = async (id, params) => {
     }
 }
 
-module.exports = {addNew, getAll, getPagination, changeOrder}
+module.exports = {addNew, getAll, getPagination, changeOrder, getStatus}

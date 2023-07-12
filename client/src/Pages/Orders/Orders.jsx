@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import productsServices from "../../API/productsServices.js";
 import Pagination from "../../Components/App/Product/Pagination/Pagination.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../Components/Loader/Loader.jsx";
 import cl from './Orders.module.scss';
+import './myClider.scss';
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +21,7 @@ const Orders = () => {
             });
             setOrders(correctOrders)
             setTotalPage(Math.ceil(orders.data.count/10))
-            if (page > Math.ceil(orders.data.count/10)) {
+            if (page > Math.ceil(orders.data.count/10) && page > 1) {
                 navigate(`/orders/${Math.ceil(orders.data.count/10)}`)
             }
             setIsLoading(false)
@@ -41,15 +44,18 @@ const Orders = () => {
                     <div className={cl.orders} key={order.id}>
                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
                             <h4 className={cl.id}>ID: {order.payment_id ? order.payment_id : order.order_id}</h4>
-                            {/*<label>Отправлен <input type="checkbox" checked={order.complete} onChange={() => {*/}
-                            {/*    changeOrder(order);*/}
-                            {/*}}/></label>*/}
                             <div onClick={() => {
                                 changeOrder(order);
                             }} className={`${cl.checkbox} ${order.complete ? cl.active : ''}`} ></div>
                         </div>
-                        <div style={{display: 'flex', gap: 15, alignItems: 'center'}}>
-                            <div className={cl.image}><img src="http://178.165.38.121:5000/images/58fbe1e2-bcea-4464-9d23-ff836109c3a5.jpg" alt=""/></div>
+                        <div className={cl.main}>
+                            <Carousel className='slider' showArrows={true} showThumbs={false} showStatus={false}>
+                                {order.img.map((photo, index) => (
+                                    <div key={index} className={cl.image}>
+                                        <img src={`http://178.165.38.121:5000/images/${photo}`} alt=""/>
+                                    </div>
+                                ))}
+                            </Carousel>
                             <div className={cl.description}>
                                 <div><h4>Цена: {order.amount} {order.currency}</h4></div>
                                 <div><h4>Статус оплаты: {order.status}</h4></div>

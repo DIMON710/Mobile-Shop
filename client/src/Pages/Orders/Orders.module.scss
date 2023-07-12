@@ -1,15 +1,26 @@
 .orders {
-  border: 1px solid #646cff;
+  //border: 1px solid #646cff;
   padding: 15px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  background-color: #1a1a1a;
   .id {
     text-align: left;
   }
   .date {
     text-align: right;
+  }
+  .main {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-around;
+    @media (max-width: 600px) {
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
   }
   .description {
     display: flex;
@@ -30,15 +41,19 @@
   }
   .image {
     height: 164px;
-
+    width: 150px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
     img {
       width: 100%;
       height: 100%;
       border-radius: 8px;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
   .checkbox {
+    background-color: #242424;
     border: 1px solid #646cff;
     width: 20px;
     height: 20px;

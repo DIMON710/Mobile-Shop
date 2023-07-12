@@ -12,6 +12,7 @@ const Orders = sequelize.define('orders', {
     date: {type: DataTypes.BIGINT},
     complete: {type: DataTypes.BOOLEAN, defaultValue: false},
     delivery: {type: DataTypes.STRING},
+    img: {type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: []},
 })
 
 module.exports = {Orders}

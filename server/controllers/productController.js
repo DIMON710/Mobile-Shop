@@ -37,7 +37,7 @@ const getSome = async (req, res) => {
         try {
             const {ids} = req.body;
             if (ids) {
-                const products = await productService.getSome(ids);
+                const products = await productService.getSome({id: ids});
                 return res.send(products);
             }
             return res.sendStatus(404)

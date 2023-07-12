@@ -1,33 +1,31 @@
 const LiqPay = require('../libraries/liqpay.js');
-const uuid = require('uuid');
 const payService = require('../services/payService.js');
-let id = ''
 const public_key = process.env.PUBLIC_KEY
 const private_key = process.env.PRIVATE_KEY
 const pay = async (req, res) => {
     try {
-        const {amount, description, delivery} = req.body;
+        const {amount, description, delivery, img, order_id} = req.body;
         const liqpay = new LiqPay(public_key, private_key)
-        id = uuid.v4();
         const params = {
             action: 'pay',
             amount,
             currency: 'UAH',
             description,
-            order_id: id,
+            order_id,
             version: '3',
-            server_url: `http://178.165.38.121:5000/pay/check/${id}`,
+            server_url: `http://178.165.38.121:5000/pay/check/${order_id}`,
             result_url: "http://178.165.38.121:3000/1"
         }
         const obj = liqpay.cnb_object(params);
         const newOrder = await payService.addNew({
-            order_id: id,
+            order_id,
             description,
             currency: 'UAH',
             amount,
             status: 'processing',
             date: Date.now(),
             delivery,
+            img
         });
         console.log(newOrder)
         res.send(`https://www.liqpay.ua/api/3/checkout?data=${obj.data}&signature=${obj.signature}`)
@@ -80,6 +78,19 @@ const getAllPay = async (req, res) => {
         return res.send(e)
     }
 }
+const getStatus = async (req, res) => {
+    try {
+        const {order_id} = req.body;
+        if (order_id) {
+            const products = await payService.getStatus(order_id);
+            return res.send(products.status);
+        }
+        return res.sendStatus(404)
+    } catch (e) {
+        console.error(e)
+        return res.send(e)
+    }
+}
 const getPay = async (req, res) => {
     try {
         const {page} = req.params;
@@ -90,4 +101,4 @@ const getPay = async (req, res) => {
         return res.send(e)
     }
 }
-module.exports = {pay, checkPay, getAllPay, getPay, changeOrder}
+module.exports = {pay, checkPay, getAllPay, getPay, changeOrder, getStatus}

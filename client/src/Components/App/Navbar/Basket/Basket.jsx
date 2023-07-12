@@ -24,6 +24,16 @@ const Basket = () => {
         }, 300)
     }
     useEffect(() => {
+        if (localStorage.getItem('order')) {
+            const order_id = localStorage.getItem('order');
+            productsServices.getStatus(order_id).then(status => {
+                if (status.data === 'success') {
+                    localStorage.removeItem('basketProducts');
+                    localStorage.removeItem('order')
+                    setBasket([]);
+                }
+            })
+        }
         if (localStorage.getItem('basketProducts')) {
             const basketProductsId = JSON.parse(localStorage.getItem('basketProducts'))
             productsServices.getSome(basketProductsId).then(products => {

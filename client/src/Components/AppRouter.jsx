@@ -3,7 +3,6 @@ import {Admin} from "../context/index.jsx";
 import {Route, Routes} from "react-router-dom";
 import Main from "../Pages/Main.jsx";
 import {adminRoutes, myRoutes} from "../router/index.jsx";
-import Loader from "./Loader/Loader.jsx";
 const AppRouter = () => {
     const [admin, setAdmin] = useContext(Admin);
     const [isLoading, setIsLoading] = useState(true)
