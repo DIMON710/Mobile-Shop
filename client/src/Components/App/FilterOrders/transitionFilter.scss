@@ -1,7 +1,9 @@
 .filter {
-
-  @media (max-width: 983px) {
-    max-width: 630px;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    height: 100%;
+  @media (max-width: 1000px) {
+    max-width: 860px;
     width: 100%;
   }
     &.enter {

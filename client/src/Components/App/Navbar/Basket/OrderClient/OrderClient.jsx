@@ -5,11 +5,14 @@ import './OrderClient.module.scss';
 import {BasketProduct} from "../../../../../context/index.jsx";
 import {v4} from 'uuid';
 const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
-    const [basket, setBasket] = useContext(BasketProduct);
+    const [basket] = useContext(BasketProduct);
     const [delivery, setDelivery] = useState({city: 'Харьков', house: '', street: '', flat: '', building: ''});
     const pay = (e) => {
         e.preventDefault();
-        if (delivery.city === '' || delivery.street === '' || delivery.flat === '' || delivery.house === '') return
+        const invalidHouse = () => delivery.house === '' || isNaN(delivery.house[0]) || delivery.house.length > 7;
+        const invalidFlat = () => delivery.flat === '' || delivery.house.length > 6;
+
+        if (delivery.city === '' || delivery.street === '' || invalidHouse() || invalidFlat()) return
         const order_id = v4()
         localStorage.setItem('order', order_id)
         const description = basket.reduce((sum, product) => sum += `${product.title}${product.quantity > 1 ? ` (${product.quantity}шт)` : ''}, `, '').slice(0, -2);

@@ -2,9 +2,10 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import cl from './Basket.module.scss'
 import './transitionBasket.scss'
 import './OrderClient/transitionOrder.scss'
+import './transitionProducts.scss'
 import Product from "../../Product/Product.jsx";
 import {BasketProduct} from "../../../../context/index.jsx";
-import {CSSTransition} from "react-transition-group";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 import productsServices from "../../../../API/productsServices.js";
 import Loader from "../../../Loader/Loader.jsx";
 import OrderClient from "./OrderClient/OrderClient.jsx";
@@ -80,20 +81,25 @@ const Basket = () => {
                                 <h2>Корзина</h2>
                                 <div onClick={() => setActive(!active)} className={cl.close}></div>
                             </div>
-                            {basket.length ?
-                                <>
-                                        <div className={cl.products}>
-                                            <div className={cl.product}>{basket.map(item => {
-                                                return <Product key={item.id} item={item} buttonFunc={removeBasket} btnName={'Удалить'}/>
-                                            })}
-                                            </div>
-                                            <div className={cl.btns}>
-                                                <h3><strong>{total} UAH</strong></h3>
-                                                <button onClick={HandleOrder} style={{width: '30%'}}><h3>Оформить заказ</h3></button>
-                                            </div>
-                                        </div>
-                                </> : isLoading ? <Loader/> :
-                                <p>Корзина пуста</p>}
+                                <div className={cl.products}>
+                                    <TransitionGroup className={cl.product}>
+                                        {basket.map(item => (
+                                            <CSSTransition
+                                                key={item.id}
+                                                timeout={300}
+                                                classNames="product"
+                                            >
+                                                <Product item={item} buttonFunc={removeBasket} btnName={'Удалить'}/>
+                                            </CSSTransition>
+                                        ))}
+                                    </TransitionGroup>
+                                    {basket.length > 0 && <div className={cl.btns}>
+                                        <h3><strong>{total} UAH</strong></h3>
+                                        <button onClick={HandleOrder} style={{width: '30%'}}><h3>Оформить заказ</h3>
+                                        </button>
+                                    </div>}
+                                </div>
+                            {basket.length < 1 ? isLoading ? <Loader/> : <p>Корзина пуста</p> : <></>}
                         </div>
                     </div>
                 </div>

@@ -32,8 +32,8 @@ export default class productsServices {
         }
         return await axios.get(`${CLIENT}/orders/${page}`);
     }
-    static async filterOrders (params) {
-        return await axios.post(`${CLIENT}/orders/filter`, {params});
+    static async filterOrders (params, page) {
+        return await axios.post(`${CLIENT}/orders/filter/${page}`, {params});
     }
     static async changeOrder ({id, complete}) {
         return await axios.put(`${CLIENT}/orders/order`, {id, complete: !complete});

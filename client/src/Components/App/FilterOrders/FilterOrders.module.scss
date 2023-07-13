@@ -2,15 +2,19 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  background-color: #1a1a1a;
-  border-radius: 8px;
   padding: 20px;
   width: 220px;
+  @media (max-width: 1000px) {
+    margin: 0 auto;
+  }
   .item {
     display: flex;
     align-items: center;
     gap: 5px;
     cursor: pointer;
+    &:nth-child(3) {
+      margin-top: 5px;
+    }
     .dot {
       position: relative;
       border: 1px solid #535bf2;

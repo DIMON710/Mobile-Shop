@@ -60,8 +60,8 @@ const Catalog = () => {
             :   <div>
                     <div className={cl.productList}>
                         {productValue.length !== 0 && productValue.map(item => (
-                            <Product key={item.id} id={item.id} changeProducts={changeProducts} buttonFunc={basketFunc} item={item}
-                                     btnName={'В корзину'}/>
+                                <Product key={item.id} id={item.id} changeProducts={changeProducts} buttonFunc={basketFunc} item={item}
+                                              btnName={'В корзину'}/>
                         ))}
                     </div>
                     <Pagination currentPage={page} totalPage={totalPage} endpoint={'/'}/>

@@ -10,7 +10,7 @@ const Pagination = ({currentPage, totalPage, endpoint}) => {
     }
     return (
         <div className={cl.wrapper}>
-            {pages.map((page) => (
+            {pages.length > 1 && pages.map((page) => (
                 <button key={page} onClick={() => {
                     navigate(`${endpoint + page}`)
                     window.scrollTo(0,0)

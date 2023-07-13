@@ -71,9 +71,9 @@ const changeOrder = async (req, res) => {
 const filterOrders = async (req, res) => {
     try {
         const {params} = req.body;
+        const {page} = req.params;
         let obj = {}
-        console.log(params)
-        const newParams = params.map(el => {
+        params.map(el => {
             for (let key in el.value) {
                 if (!obj[key]) {
                     obj[key] = el.value[key]
@@ -82,8 +82,7 @@ const filterOrders = async (req, res) => {
                 }
             }
         });
-        const filteredOrder = await payService.filterOrders(obj);
-        console.log(obj)
+        const filteredOrder = await payService.filterOrders(obj, page);
         return res.send(filteredOrder)
     } catch (e) {
         console.log(e)

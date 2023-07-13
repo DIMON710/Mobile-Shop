@@ -40,7 +40,6 @@ const Product = ({item, buttonFunc, btnName, id, changeProducts}) => {
                 }
             }
         }
-
     }
     useEffect(() => {
         if (!admin) {
@@ -105,7 +104,7 @@ const Product = ({item, buttonFunc, btnName, id, changeProducts}) => {
                 }
             }}>{item.title}</h4>
             <p>{item.description}</p>
-            {inBasket && btnName === 'Удалить' && <div className={cl.quantity}>
+            {btnName === 'Удалить' && <div className={cl.quantity}>
                 <button style={activeStyle.down ? {borderColor: 'red'} : {}} onClick={changeDownQuantity}>-</button>
                 <button>{item.quantity}</button>
                 <button style={activeStyle.up ? {borderColor: 'green'} : {}} onClick={changeUpQuantity}>+</button>

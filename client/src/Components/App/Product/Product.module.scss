@@ -68,7 +68,7 @@
       margin: 10px 0 0 0;
       background-color: #111;
       border-color: transparent;
-      transition: 0.3s background-color ease-in-out, 0.2s border ease-in-out;
+      transition: 0.3s background-color ease-in-out, 0.2s border linear;
       &:not(:nth-child(2)) {
         &:hover {
           background-color: #242424;

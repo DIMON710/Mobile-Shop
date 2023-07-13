@@ -2,6 +2,16 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  @media (max-width: 1000px) {
+    flex-wrap: wrap;
+  }
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 860px;
+  width: 100%;
 }
 .orders {
   display: flex;

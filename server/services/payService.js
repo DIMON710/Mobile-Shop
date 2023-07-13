@@ -1,4 +1,5 @@
 const {Orders} = require('../models/payModel.js');
+const {Op} = require("sequelize");
 
 const addNew = async (order) => {
     try {
@@ -39,9 +40,16 @@ const changeOrder = async (id, params) => {
         console.error(e)
     }
 }
-const filterOrders = async (params) => {
+const filterOrders = async (params, page) => {
     try {
-        return await Orders.findAndCountAll({order: [['date', 'DESC']], where: {...params}})
+        page = page || 1
+        const limit = 10;
+        const offset = page * limit - limit
+        if (params.status && params.status !== 'success') {
+            params.status = {[Op.ne]: 'success'};
+        }
+        console.log(params)
+        return await Orders.findAndCountAll({order: [['date', 'DESC']], where: {...params}, limit, offset})
     } catch (e) {
         console.error(e)
     }
