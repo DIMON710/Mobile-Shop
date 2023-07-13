@@ -35,8 +35,9 @@ const getOne = async (req, res) => {
 }
 const getSome = async (req, res) => {
         try {
-            const {ids} = req.body;
+            let {ids} = req.body;
             if (ids) {
+                ids = ids.map(el => el.id)
                 const products = await productService.getSome({id: ids});
                 return res.send(products);
             }

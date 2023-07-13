@@ -7,7 +7,7 @@ import productsServices from "../../API/productsServices.js";
 import AddProduct from "../../Components/App/AddProduct/AddProduct.jsx";
 import Loader from "../../Components/Loader/Loader.jsx";
 import {useNavigate, useParams} from "react-router-dom";
-import Pagination from "../../Components/App/Product/Pagination/Pagination.jsx";
+import Pagination from "../../Components/Pagination/Pagination.jsx";
 
 const Catalog = () => {
     const [productValue, setProductValue] = useContext(Products);
@@ -43,9 +43,10 @@ const Catalog = () => {
     }
     return (
         <div className={cl.catalog}>
-            <div style={{position: 'absolute', top: 10, left: 20, display: 'flex', gap: 10}}>
+            <div className={cl.buttons}>
                 {admin ? <button onClick={() => {
                     setAdmin(false)
+                    setChangeProducts(false)
                     localStorage.removeItem('admin')
                 }}>Выйти</button> : <button onClick={() => {
                     navigate('/admin');

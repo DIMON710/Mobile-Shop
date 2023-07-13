@@ -23,19 +23,22 @@ export default class productsServices {
     static async pay ({amount, description, delivery, img, order_id}) {
         return await axios.post(`${CLIENT}/pay/`, {amount, description, delivery, img, order_id});
     }
-    static async getPay (page) {
-        if (page < 1) {
-            page = 1
-        }
-        return await axios.get(`${CLIENT}/pay/${page}`);
-    }
     static async getStatus (order_id) {
         return await axios.post(`${CLIENT}/pay/status`, {order_id});
     }
-    static async changeOrder ({id, complete}) {
-        return await axios.put(`${CLIENT}/pay/order`, {id, complete: !complete});
+    static async getOrders (page) {
+        if (page < 1) {
+            page = 1
+        }
+        return await axios.get(`${CLIENT}/orders/${page}`);
     }
-    static async getAllPay () {
-        return await axios.get(`${CLIENT}/pay/all`);
+    static async filterOrders (params) {
+        return await axios.post(`${CLIENT}/orders/filter`, {params});
+    }
+    static async changeOrder ({id, complete}) {
+        return await axios.put(`${CLIENT}/orders/order`, {id, complete: !complete});
+    }
+    static async getAllOrders () {
+        return await axios.get(`${CLIENT}/orders/all`);
     }
 }

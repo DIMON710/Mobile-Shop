@@ -1,5 +1,6 @@
 const LiqPay = require('../libraries/liqpay.js');
 const payService = require('../services/payService.js');
+const {Products} = require("../models/productsModel");
 const public_key = process.env.PUBLIC_KEY
 const private_key = process.env.PRIVATE_KEY
 const pay = async (req, res) => {
@@ -43,7 +44,6 @@ const checkPay = (req, res) => {
             "version"  : "3",
             order_id: id
         }, async function( json ){
-            console.log( json );
             const newOrder = await payService.changeOrder(id, {
                 payment_id: json.payment_id,
                 status: json.status,
@@ -68,8 +68,30 @@ const changeOrder = async (req, res) => {
         res.send(e)
     }
 }
+const filterOrders = async (req, res) => {
+    try {
+        const {params} = req.body;
+        let obj = {}
+        console.log(params)
+        const newParams = params.map(el => {
+            for (let key in el.value) {
+                if (!obj[key]) {
+                    obj[key] = el.value[key]
+                } else {
+                    delete obj[key]
+                }
+            }
+        });
+        const filteredOrder = await payService.filterOrders(obj);
+        console.log(obj)
+        return res.send(filteredOrder)
+    } catch (e) {
+        console.log(e)
+        res.send(e)
+    }
+}
 
-const getAllPay = async (req, res) => {
+const getAllOrders = async (req, res) => {
     try {
         const orders = await payService.getAll()
         return res.send(orders)
@@ -91,7 +113,7 @@ const getStatus = async (req, res) => {
         return res.send(e)
     }
 }
-const getPay = async (req, res) => {
+const getOrders = async (req, res) => {
     try {
         const {page} = req.params;
         const orders = await payService.getPagination(page)
@@ -101,4 +123,4 @@ const getPay = async (req, res) => {
         return res.send(e)
     }
 }
-module.exports = {pay, checkPay, getAllPay, getPay, changeOrder, getStatus}
+module.exports = {pay, checkPay, getAllOrders, getOrders, changeOrder, getStatus, filterOrders}

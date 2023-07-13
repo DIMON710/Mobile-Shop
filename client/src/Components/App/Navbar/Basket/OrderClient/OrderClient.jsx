@@ -12,10 +12,11 @@ const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
         if (delivery.city === '' || delivery.street === '' || delivery.flat === '' || delivery.house === '') return
         const order_id = v4()
         localStorage.setItem('order', order_id)
-        const description = basket.reduce((sum, product) => sum += product.title + ', ', '').slice(0, -2);
+        const description = basket.reduce((sum, product) => sum += `${product.title}${product.quantity > 1 ? ` (${product.quantity}шт)` : ''}, `, '').slice(0, -2);
         const newDelivery = `г. ${delivery.city}, ул. ${delivery.street}, д. ${delivery.house},${delivery.building !== '' ? ' к. ' + delivery.building + ',' : ''} кв. ${delivery.flat}`;
         const img = basket.map(product => product.img)
         productsServices.pay({amount: total, description, delivery: newDelivery, img, order_id}).then(r => {
+            setIsOpenOrder(false)
             window.open(r.data, '_blank');
         })
     }
@@ -25,7 +26,7 @@ const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
                 <div className={cl.order}  onClick={(e) => e.stopPropagation()}>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <h2>Адрес доставки: </h2>
-                        <div onClick={() => setIsOpenOrder(prevState => !prevState)} className={cl.close}></div>
+                        <div onClick={() => setIsOpenOrder(false)} className={cl.close}></div>
                     </div>
                     <form onSubmit={pay}>
                         <label>Город <input value="Харьков" disabled type="text"/></label>

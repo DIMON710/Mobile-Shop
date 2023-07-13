@@ -15,7 +15,7 @@ const Basket = () => {
     const refBasket = useRef(null);
     const refOrder = useRef(null);
     const [basket, setBasket] = useContext(BasketProduct);
-    let total = 0;
+    const [total, setTotal] = useState(true);
     const removeBasket = (id) => {
         if ((basket.findIndex(item => item.id === id) !== -1))
             setBasket(basket.filter(item => item.id !== id));
@@ -24,33 +24,46 @@ const Basket = () => {
         }, 300)
     }
     useEffect(() => {
-        if (localStorage.getItem('order')) {
-            const order_id = localStorage.getItem('order');
-            productsServices.getStatus(order_id).then(status => {
-                if (status.data === 'success') {
-                    localStorage.removeItem('basketProducts');
-                    localStorage.removeItem('order')
-                    setBasket([]);
-                }
-            })
-        }
         if (localStorage.getItem('basketProducts')) {
             const basketProductsId = JSON.parse(localStorage.getItem('basketProducts'))
             productsServices.getSome(basketProductsId).then(products => {
-                setBasket(products.data);
-                setIsLoading(false)
+                const newProducts = products.data.map(product => {
+                    const quantity = basketProductsId.find(basketProduct => product.id === basketProduct.id).quantity
+                    return {...product, quantity}
+                })
+                setBasket(newProducts);
+                setIsLoading(false);
             });
         } else {
             setIsLoading(false)
         }
     }, []);
+    useEffect(() => {
+        let countTotal = 0
+        basket.map(product => {
+            countTotal+= product.price * product.quantity;
+        })
+        setTotal(countTotal)
+    }, [basket])
     const HandleOrder = () => {
         setIsOpenOrder(prevState => !prevState);
         setActive(prevState => !prevState);
     }
     return (
         <>
-            <button className={`${basket.length > 0 && cl.basketBtn}`} onClick={() => setActive(!active)}>
+            <button className={`${basket.length > 0 && cl.basketBtn}`} onClick={() => {
+                if (localStorage.getItem('order')) {
+                    const order_id = localStorage.getItem('order');
+                    productsServices.getStatus(order_id).then(status => {
+                        if (status.data === 'success') {
+                            localStorage.removeItem('basketProducts');
+                            localStorage.removeItem('order')
+                            setBasket([]);
+                        }
+                    })
+                }
+                setActive(!active)
+            }}>
                 Корзина
             </button>
             <CSSTransition
@@ -71,7 +84,6 @@ const Basket = () => {
                                 <>
                                         <div className={cl.products}>
                                             <div className={cl.product}>{basket.map(item => {
-                                                total+=Number(item.price);
                                                 return <Product key={item.id} item={item} buttonFunc={removeBasket} btnName={'Удалить'}/>
                                             })}
                                             </div>

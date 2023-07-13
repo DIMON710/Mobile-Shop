@@ -1,0 +1,28 @@
+.filter {
+
+  @media (max-width: 983px) {
+    max-width: 630px;
+    width: 100%;
+  }
+    &.enter {
+         opacity: 0;
+         transform: translateX(-100%);
+     }
+    &.enter-active {
+         opacity: 1;
+         transform: translateX(0);
+         transition: opacity 300ms, transform 300ms;
+     }
+    &.exit {
+         opacity: 1;
+         transform: translateX(0);
+     }
+    &.exit-active {
+        opacity: 0;
+        transform: translateX(-100%);
+        transition: opacity 300ms, transform 300ms;
+      @media (max-width: 988px) {
+        transform: translateX(200%);
+      }
+    }
+}

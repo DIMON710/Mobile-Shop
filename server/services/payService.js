@@ -27,7 +27,6 @@ const getPagination = async (page) => {
         const limit = 10;
         const offset = page * limit - limit
         const ids = await Orders.findAll()
-        console.log(ids)
         return await Orders.findAndCountAll({order: [['date', 'DESC']], limit, offset})
     } catch (e) {
         console.error(e)
@@ -40,5 +39,12 @@ const changeOrder = async (id, params) => {
         console.error(e)
     }
 }
+const filterOrders = async (params) => {
+    try {
+        return await Orders.findAndCountAll({order: [['date', 'DESC']], where: {...params}})
+    } catch (e) {
+        console.error(e)
+    }
+}
 
-module.exports = {addNew, getAll, getPagination, changeOrder, getStatus}
+module.exports = {addNew, getAll, getPagination, changeOrder, getStatus, filterOrders}

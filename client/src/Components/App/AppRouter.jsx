@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Admin} from "../context/index.jsx";
+import {Admin} from "../../context/index.jsx";
 import {Route, Routes} from "react-router-dom";
-import Main from "../Pages/Main.jsx";
-import {adminRoutes, myRoutes} from "../router/index.jsx";
+import Main from "../../Pages/Main.jsx";
+import {adminRoutes, myRoutes} from "../../router/index.jsx";
 const AppRouter = () => {
     const [admin, setAdmin] = useContext(Admin);
     const [isLoading, setIsLoading] = useState(true)

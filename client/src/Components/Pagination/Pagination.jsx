@@ -11,7 +11,10 @@ const Pagination = ({currentPage, totalPage, endpoint}) => {
     return (
         <div className={cl.wrapper}>
             {pages.map((page) => (
-                <button key={page} onClick={() => navigate(`${endpoint + page}`)} style={page == currentPage ? {borderColor: '#646cff'} : {}} className={cl.pagination}>{page}</button>
+                <button key={page} onClick={() => {
+                    navigate(`${endpoint + page}`)
+                    window.scrollTo(0,0)
+                }} style={page == currentPage ? {borderColor: '#646cff'} : {}} className={cl.pagination}>{page}</button>
             ))}
         </div>
     );
