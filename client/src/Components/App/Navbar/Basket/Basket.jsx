@@ -42,6 +42,7 @@ const Basket = () => {
     useEffect(() => {
         let countTotal = 0
         basket.map(product => {
+            product.quantity = product.quantity !== '' ? product.quantity : 1
             countTotal+= product.price * product.quantity;
         })
         setTotal(countTotal)

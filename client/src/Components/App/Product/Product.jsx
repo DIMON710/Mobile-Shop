@@ -60,39 +60,36 @@ const Product = ({item, buttonFunc, btnName, id, changeProducts}) => {
             console.log(e);
         }
     }
-    const changeDownQuantity = () => {
-        if (item.quantity > 1) {
-            setActiveStyle(prevState => ({...prevState, down: true}))
-            const basketIndex = basketProduct.findIndex(product => product.id === item.id)
-            let basket = [...basketProduct];
-            basket[basketIndex].quantity = basket[basketIndex].quantity - 1
-            setBasketProduct(basket)
-            const res = JSON.parse(localStorage.getItem('basketProducts'));
-            const index = res.findIndex(product => product.id === item.id)
-            res[index].quantity = res[index].quantity - 1
-            const req = JSON.stringify(res);
-            localStorage.setItem('basketProducts', req);
-            setTimeout(() => {
-                setActiveStyle(prevState => ({...prevState, down: false}))
-            }, 200)
+    const changeQuantity = (sign = '', e = undefined) => {
+        const basketIndex = basketProduct.findIndex(product => product.id === item.id)
+        let basket = [...basketProduct];
+        if (sign === '-') {
+            if (item.quantity > 1) {
+                setActiveStyle(prevState => ({...prevState, down: true}))
+                basket[basketIndex].quantity = basket[basketIndex].quantity - 1
+                setTimeout(() => {
+                    setActiveStyle(prevState => ({...prevState, down: false}))
+                }, 200)
+            }
+        } else if (sign === '+') {
+            if (item.quantity < 20) {
+                setActiveStyle(prevState => ({...prevState, up: true}))
+                basket[basketIndex].quantity = Number(basket[basketIndex].quantity) + 1
+                setTimeout(() => {
+                    setActiveStyle(prevState => ({...prevState, up: false}))
+                }, 200)
+            }
+        } else {
+            if (e.target.value < 21 && e.target.value > -1 && e.target.value !== '0' && !isNaN(e.target.value)) {
+                basket[basketIndex].quantity = e.target.value
+            }
         }
-    }
-    const changeUpQuantity = () => {
-        if (item.quantity < 20) {
-            setActiveStyle(prevState => ({...prevState, up: true}))
-            const basketIndex = basketProduct.findIndex(product => product.id === item.id)
-            let basket = [...basketProduct];
-            basket[basketIndex].quantity = basket[basketIndex].quantity + 1
-            setBasketProduct(basket)
-            const res = JSON.parse(localStorage.getItem('basketProducts'));
-            const index = res.findIndex(product => product.id === item.id)
-            res[index].quantity = res[index].quantity + 1
-            const req = JSON.stringify(res);
-            localStorage.setItem('basketProducts', req);
-            setTimeout(() => {
-                setActiveStyle(prevState => ({...prevState, up: false}))
-            }, 200)
-        }
+        setBasketProduct(basket)
+        const res = JSON.parse(localStorage.getItem('basketProducts'));
+        const index = res.findIndex(product => product.id === item.id)
+        res[index].quantity = basket[basketIndex].quantity
+        const req = JSON.stringify(res);
+        localStorage.setItem('basketProducts', req);
     }
     return (
         <div className={cl.product}>
@@ -105,9 +102,14 @@ const Product = ({item, buttonFunc, btnName, id, changeProducts}) => {
             }}>{item.title}</h4>
             <p>{item.description}</p>
             {btnName === 'Удалить' && <div className={cl.quantity}>
-                <button style={activeStyle.down ? {borderColor: 'red'} : {}} onClick={changeDownQuantity}>-</button>
-                <button>{item.quantity}</button>
-                <button style={activeStyle.up ? {borderColor: 'green'} : {}} onClick={changeUpQuantity}>+</button>
+                <button style={activeStyle.down ? {borderColor: 'red'} : {}} onClick={() => changeQuantity('-')}>-</button>
+                <input value={item.quantity} onBlur={(event) => {
+                    if (event.target.value === '') {
+                        const e = {target: {value: 1}}
+                        changeQuantity('', e)
+                    }
+                }} onChange={(e) => changeQuantity('', e)} type="number"/>
+                <button style={activeStyle.up ? {borderColor: 'green'} : {}} onClick={() => changeQuantity('+')}>+</button>
             </div>}
             <h3>{item.price} UAH</h3>
             {!admin && <button style={inBasket && btnName !== 'Удалить' ? {border: '1px solid green'} : {}}

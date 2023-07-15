@@ -21,6 +21,7 @@ const ProductPage = () => {
             setBtnName('В корзину')
         }
     }, [basketProduct, params]);
+
     useEffect(() => {
         productsServices.getOne(params.id).then((res) => {
             setProduct(res.data)
