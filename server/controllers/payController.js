@@ -1,8 +1,9 @@
 const LiqPay = require('../libraries/liqpay.js');
 const payService = require('../services/payService.js');
-const {Products} = require("../models/productsModel");
 const public_key = process.env.PUBLIC_KEY
 const private_key = process.env.PRIVATE_KEY
+const CLIENT = process.env.CLIENT_URL
+const SERVER = process.env.SERVER_URL
 const pay = async (req, res) => {
     try {
         const {amount, description, delivery, img, order_id} = req.body;
@@ -14,8 +15,8 @@ const pay = async (req, res) => {
             description,
             order_id,
             version: '3',
-            server_url: `http://178.165.38.121:5000/pay/check/${order_id}`,
-            result_url: "http://178.165.38.121:3000/1"
+            server_url: `${SERVER}/pay/check/${order_id}`,
+            result_url: `${CLIENT}/1`
         }
         const obj = liqpay.cnb_object(params);
         const newOrder = await payService.addNew({

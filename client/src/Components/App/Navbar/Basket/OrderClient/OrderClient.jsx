@@ -28,10 +28,11 @@ const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
             <div className={cl.wrapper} onClick={() => setIsOpenOrder(false)}>
                 <div className={cl.order}  onClick={(e) => e.stopPropagation()}>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <h2>Адрес доставки: </h2>
+                        <h2>Оформление заказа: </h2>
                         <div onClick={() => setIsOpenOrder(false)} className={cl.close}></div>
                     </div>
                     <form onSubmit={pay}>
+                        <h2>Выбор доставки</h2>
                         <label>Город <input value="Харьков" disabled type="text"/></label>
                         <label>Улица <input onChange={(e) => {
                             setDelivery(prevState => ({...prevState, street: e.target.value}))

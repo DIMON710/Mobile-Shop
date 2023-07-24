@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from "./Order.module.scss";
 import {Carousel} from "react-responsive-carousel";
-
+const SERVER = import.meta.env.VITE_API_URL
 const Order = ({order, changeOrder}) => {
     return (
         <div className={cl.order}>
@@ -15,7 +15,7 @@ const Order = ({order, changeOrder}) => {
                 <Carousel className='slider' showArrows={true} showThumbs={false} showStatus={false}>
                     {order.img.map((photo, index) => (
                         <div key={index} className={cl.image}>
-                            <img src={`http://178.165.38.121:5000/images/${photo}`} alt=""/>
+                            <img src={`${SERVER}/images/${photo}`} alt=""/>
                         </div>
                     ))}
                 </Carousel>

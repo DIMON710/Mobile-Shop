@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import productsServices from "../../API/productsServices.js";
-import Pagination from "../../Components/Pagination/Pagination.jsx";
+import Pagination from "../../Components/UI/Pagination/Pagination.jsx";
 import {useNavigate, useParams} from "react-router-dom";
-import Loader from "../../Components/Loader/Loader.jsx";
+import Loader from "../../Components/UI/Loader/Loader.jsx";
 import cl from './Orders.module.scss';
 import './transitionOrders.scss';
 import './myClider.scss';

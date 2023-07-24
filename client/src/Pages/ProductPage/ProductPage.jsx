@@ -1,33 +1,40 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import productsServices from '../../API/productsServices.js';
-import Loader from '../../Components/Loader/Loader.jsx';
+import Loader from '../../Components/UI/Loader/Loader.jsx';
 import cl from './ProductPage.module.scss';
 import {BasketProduct, Products} from "../../context/index.jsx";
+const SERVER = import.meta.env.VITE_API_URL
 const ProductPage = () => {
     const [isLoading, setIsLoading] = useState(true)
-    const [product, setProduct] = useState(true)
+    const [product, setProduct] = useState({})
     const [btnName, setBtnName] = useState('В корзину')
     const [inBasket, setInBasket] = useState(false);
     const [productValue] = useContext(Products);
     const [basketProduct, setBasketProduct] = useContext(BasketProduct);
-    const params = useParams()
+    const {id} = useParams()
+    const navigate = useNavigate()
+
     useEffect(() => {
-        if (basketProduct.findIndex(i => i.id === product.id) !== -1) {
+        productsServices.getOne(id).then((res) => {
+            if (res.data !== '') {
+                setProduct(res.data)
+                setIsLoading(false)
+            } else {
+                navigate('/')
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        if (basketProduct.find(product => product.id == id)) {
             setInBasket(true);
             setBtnName('В корзине')
         } else {
             setInBasket(false);
             setBtnName('В корзину')
         }
-    }, [basketProduct, params]);
-
-    useEffect(() => {
-        productsServices.getOne(params.id).then((res) => {
-            setProduct(res.data)
-            setIsLoading(false)
-        })
-    }, [])
+    }, [basketProduct, id]);
     const basketFunc = (id) => {
         const index = productValue.findIndex(item => item.id === id);
         if ((basketProduct.findIndex(item => item.id === id) === -1))
@@ -57,7 +64,7 @@ const ProductPage = () => {
             <div style={{display: 'flex', gap: 200, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
                 <div style={{width: 300, height: 400, backgroundColor: '#fff', borderRadius: 8}}>
                     <img style={{width: '100%', height: '100%', objectFit: 'contain'}}
-                         src={`http://178.165.38.121:5000/images/${product.img}`}
+                         src={`${SERVER}/images/${product.img}`}
                          alt={product.title}
                     />
                 </div>

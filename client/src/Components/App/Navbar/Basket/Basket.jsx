@@ -7,7 +7,7 @@ import Product from "../../Product/Product.jsx";
 import {BasketProduct} from "../../../../context/index.jsx";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import productsServices from "../../../../API/productsServices.js";
-import Loader from "../../../Loader/Loader.jsx";
+import Loader from "../../../UI/Loader/Loader.jsx";
 import OrderClient from "./OrderClient/OrderClient.jsx";
 const Basket = () => {
     const [active, setActive] = useState(false);

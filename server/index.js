@@ -6,9 +6,9 @@ const cors = require('cors');
 const router = require('./routes/index.js');
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const CLIENT = process.env.CLIENT_URL
 app.use(cors({
-    origin: 'http://178.165.38.121:3000',
+    origin: CLIENT,
     optionsSuccessStatus: 200
 }));
 app.use(express.json());
@@ -26,7 +26,7 @@ const startApp = async () => {
     try {
         await sequelize.authenticate();
         await sequelize.sync();
-        app.listen(PORT, '192.168.31.200', () => {
+        app.listen(PORT, '192.168.0.223', () => {
             console.log(`Server starting on port ${PORT}`);
         });
     } catch (e) {

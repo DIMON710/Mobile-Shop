@@ -1,44 +1,44 @@
 import axios from 'axios';
-const CLIENT = 'http://178.165.38.121:5000'
+const SERVER = import.meta.env.VITE_API_URL
 export default class productsServices {
     static async getAll () {
-        return await axios.get(`${CLIENT}/products/`);
+        return await axios.get(`${SERVER}/products`);
     }
     static async getAllPage (page) {
         page = page || 1
-        return await axios.get(`${CLIENT}/products/page/` + page);
+        return await axios.get(`${SERVER}/products/page/` + page);
     }
     static async getOne (id) {
-        return await axios.get(`${CLIENT}/products/` + id);
+        return await axios.get(`${SERVER}/products/` + id);
     }
     static async getSome (ids) {
-        return await axios.post(`${CLIENT}/products/basket/`, {ids});
+        return await axios.post(`${SERVER}/products/basket/`, {ids});
     }
     static async addNew (product) {
-        return await axios.post(`${CLIENT}/products/add-new/`, product);
+        return await axios.post(`${SERVER}/products/add-new/`, product);
     }
     static async remove (id) {
-        return await axios.delete(`${CLIENT}/products/remove/` + id);
+        return await axios.delete(`${SERVER}/products/remove/` + id);
     }
     static async pay ({amount, description, delivery, img, order_id}) {
-        return await axios.post(`${CLIENT}/pay/`, {amount, description, delivery, img, order_id});
+        return await axios.post(`${SERVER}/pay/`, {amount, description, delivery, img, order_id});
     }
     static async getStatus (order_id) {
-        return await axios.post(`${CLIENT}/pay/status`, {order_id});
+        return await axios.post(`${SERVER}/pay/status`, {order_id});
     }
     static async getOrders (page) {
         if (page < 1) {
             page = 1
         }
-        return await axios.get(`${CLIENT}/orders/${page}`);
+        return await axios.get(`${SERVER}/orders/${page}`);
     }
     static async filterOrders (params, page) {
-        return await axios.post(`${CLIENT}/orders/filter/${page}`, {params});
+        return await axios.post(`${SERVER}/orders/filter/${page}`, {params});
     }
     static async changeOrder ({id, complete}) {
-        return await axios.put(`${CLIENT}/orders/order`, {id, complete: !complete});
+        return await axios.put(`${SERVER}/orders/order`, {id, complete: !complete});
     }
     static async getAllOrders () {
-        return await axios.get(`${CLIENT}/orders/all`);
+        return await axios.get(`${SERVER}/orders/all`);
     }
 }

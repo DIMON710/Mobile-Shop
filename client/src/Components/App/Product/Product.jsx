@@ -3,6 +3,7 @@ import cl from './Product.module.scss'
 import {useNavigate} from "react-router-dom";
 import {Admin, BasketProduct, Products} from "../../../context/index.jsx";
 import productsServices from "../../../API/productsServices.js";
+const SERVER = import.meta.env.VITE_API_URL
 const Product = ({item, buttonFunc, btnName, id, changeProducts}) => {
     const params = useNavigate();
     const [basketProduct, setBasketProduct] = useContext(BasketProduct);
@@ -94,7 +95,7 @@ const Product = ({item, buttonFunc, btnName, id, changeProducts}) => {
     return (
         <div className={cl.product}>
             {changeProducts && <div className={cl.remove} onClick={() => removeProduct(id)}>x</div>}
-            <div className={cl.photo}><img src={`http://178.165.38.121:5000/images/${item.img}`} alt={item.title}/></div>
+            <div className={cl.photo}><img src={`${SERVER}/images/${item.img}`} alt={item.title}/></div>
             <h4 onClick={() => {
                 if (btnName !== 'Удалить') {
                     params(`/product/${item.id}`)

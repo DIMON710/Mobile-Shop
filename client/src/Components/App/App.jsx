@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import '../../Components/App/App.css'
 import AppRouter from "./AppRouter.jsx";
 import {AdminComponent, Products} from "../../context/index.jsx";

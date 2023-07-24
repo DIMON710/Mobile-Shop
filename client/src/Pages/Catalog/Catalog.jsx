@@ -5,9 +5,9 @@ import cl from "./Catalog.module.scss";
 import "../../Components/App/AddProduct/transitionCatalog.scss";
 import productsServices from "../../API/productsServices.js";
 import AddProduct from "../../Components/App/AddProduct/AddProduct.jsx";
-import Loader from "../../Components/Loader/Loader.jsx";
+import Loader from "../../Components/UI/Loader/Loader.jsx";
 import {useNavigate, useParams} from "react-router-dom";
-import Pagination from "../../Components/Pagination/Pagination.jsx";
+import Pagination from "../../Components/UI/Pagination/Pagination.jsx";
 
 const Catalog = () => {
     const [productValue, setProductValue] = useContext(Products);
