@@ -4,13 +4,26 @@
   left: 0;
   width: 100%;
   min-height: 100%;
-  overflow: hidden;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.9);
+  .body {
+    //overflow-y: scroll;
+    //max-height: 660px;
+    height: 89%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    & > button {
+      max-width: 350px;
+      width: 100%;
+      margin-right: 25px;
+      margin-bottom: 10px;
+      align-self: flex-end;
+    }
+  }
   .order {
     cursor: default;
     position: absolute;
-    padding: 25px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -18,15 +31,40 @@
     max-width: 90%;
     min-height: 560px;
     height: 80%;
+    @media (max-width: 700px) {
+      height: 98%;
+    }
     border-radius: 8px;
     background-color:  #111;
     @media (max-width: 1400px) {
       width: 100%;
     }
+
     h2 {
       font-size: 2em;
       @media (max-width: 500px) {
         font-size: 1.5em;
+      }
+    }
+  }
+  .accordion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0 15px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    li {
+      border-radius: 8px;
+      border: 1px solid #fff;
+      padding: 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: 0.3s border-color linear;
+      &:hover {
+        border-color: #646cff;
       }
     }
   }
@@ -35,11 +73,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 0 auto;
+    margin: 40px auto 0;
     gap: 25px;
+    padding: 0 15px;
     flex-wrap: wrap;
-    max-width: 500px;
+    @media (max-width: 700px) {
+      margin-top: 20px;
+    }
     label {
       display: flex;
       flex-direction: column;
@@ -50,7 +90,8 @@
     input {
       padding: 10px 0 10px 5px;
       width: 100%;
-      border: 0;
+      border: 1px solid transparent;
+      transition: 0.2s border-color ease-in-out;
       border-radius: 5px;
     }
     div {

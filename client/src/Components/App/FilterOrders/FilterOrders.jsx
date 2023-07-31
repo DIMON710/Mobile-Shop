@@ -2,9 +2,7 @@ import React, {useRef} from 'react';
 import cl from './FilterOrders.module.scss';
 import './transitionFilter.scss';
 import {CSSTransition} from "react-transition-group";
-import {useNavigate} from "react-router-dom";
 const FilterOrders = ({isOpenFilter, settings}) => {
-    const navigate = useNavigate()
     const refFilter = useRef(null);
     const [filtersOrders, setFiltersOrders] = settings;
     const changeFilter = (title, name, checked) => {
@@ -24,7 +22,6 @@ const FilterOrders = ({isOpenFilter, settings}) => {
         const filtersObject = changedFilters.filter(filter => filter.checked);
         const strFiltersObject = JSON.stringify(filtersObject);
         localStorage.setItem('filter', strFiltersObject)
-        navigate('/orders/1')
     }
     return (
         <CSSTransition

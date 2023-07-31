@@ -1,0 +1,14 @@
+.payMeth {
+  .filter {
+    background-color: transparent;
+    font-size: 20px;
+      margin: 0 auto;
+    &>div {
+      margin-left: 30%;
+      gap: 25px;
+    }
+      div {
+        justify-content: flex-start;
+      }
+  }
+}

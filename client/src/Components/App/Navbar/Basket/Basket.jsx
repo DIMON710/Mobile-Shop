@@ -111,7 +111,9 @@ const Basket = () => {
                 className="order"
                 timeout={300}
                 unmountOnExit
-            ><OrderClient refOrder={refOrder} setIsOpenOrder={setIsOpenOrder} total={total}/></CSSTransition>
+            >
+                <OrderClient refOrder={refOrder} setIsOpenOrder={setIsOpenOrder} total={total}/>
+            </CSSTransition>
         </>
     );
 };

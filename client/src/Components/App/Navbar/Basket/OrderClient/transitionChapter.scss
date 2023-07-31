@@ -1,0 +1,26 @@
+.chapter {
+  max-width: 600px;
+  margin: 0 auto;
+  transition: opacity 300ms;
+  @media (max-height: 770px) {
+    overflow-y: auto;
+    max-height: 85%;
+    &>div {height:100%;}
+  }
+  &.enter {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  &.enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+  }
+  &.exit {
+    opacity: 1;
+    transition: opacity 300ms;
+  }
+  &.exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+}
