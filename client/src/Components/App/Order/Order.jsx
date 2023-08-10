@@ -20,9 +20,13 @@ const Order = ({order, changeOrder}) => {
                     ))}
                 </Carousel>
                 <div className={cl.description}>
-                    <div><h4>Цена: {order.amount} {order.currency}</h4></div>
-                    <div><h4>Статус оплаты: {order.status}</h4></div>
                     <div><h4>Товар: {order.description}</h4></div>
+                    <div><h4>Цена: {order.amount} {order.currency}</h4></div>
+                    <div><h4>Статус оплаты: <span
+                            style={order.status === 'success' ? {color: 'green'} : order.status === 'receipt' ? {color: 'yellow'} : {color: 'red'}}
+                    >{order.status}</span></h4></div>
+                    <div><h4>Полное имя: {order.fullName}</h4></div>
+                    <div><h4>Номер телефона: {order.tel}</h4></div>
                     <div><h4>Адрес: {order.delivery}</h4></div>
                 </div>
             </div>

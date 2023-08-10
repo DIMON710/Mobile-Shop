@@ -61,14 +61,13 @@ const ProductPage = () => {
     return (<>
         {isLoading ? <Loader/> : <div className={cl.product}>
             <h1>{product.title}</h1>
-            <div style={{display: 'flex', gap: 200, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
-                <div style={{width: 300, height: 400, backgroundColor: '#fff', borderRadius: 8}}>
-                    <img style={{width: '100%', height: '100%', objectFit: 'contain'}}
-                         src={`${SERVER}/images/${product.img}`}
+            <div className={cl.body}>
+                <div className={cl.image}>
+                    <img src={`${SERVER}/images/${product.img}`}
                          alt={product.title}
                     />
                 </div>
-                <div style={{display: 'flex', flexDirection: 'column', gap: 15, fontSize: 20}}>
+                <div className={cl.content} >
                     <p>{product.description}</p>
                     <h3 className={cl.price}><strong>{product.price} UAH</strong></h3>
                     <button style={inBasket ? {border: '1px solid green'} : {}} onClick={btnClick}>{btnName}</button>

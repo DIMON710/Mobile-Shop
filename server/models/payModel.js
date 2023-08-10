@@ -13,6 +13,8 @@ const Orders = sequelize.define('orders', {
     complete: {type: DataTypes.BOOLEAN, defaultValue: false},
     delivery: {type: DataTypes.STRING},
     img: {type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: []},
+    fullName: {type: DataTypes.STRING},
+    tel: {type: DataTypes.STRING},
 })
 
 module.exports = {Orders}

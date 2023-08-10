@@ -25,6 +25,7 @@ const Orders = () => {
     const navigate = useNavigate();
     const getFilteredOrders = () => {
         const filtersObject = filtersOrders.filter(filter => filter.checked);
+        console.log(filtersObject)
         productsServices.filterOrders(filtersObject, page).then(orders => {
             const correctOrders = orders.data.rows.map( order => {
                 const date = new Date(Number(order.date));
@@ -74,7 +75,7 @@ const Orders = () => {
     }
     return (
         <div className={cl.wrapper}>
-                <FilterOrders isOpenFilter={isOpenFilter} settings={[filtersOrders, setFiltersOrders]}/>
+                <FilterOrders isOpenFilter={isOpenFilter} settings={[filtersOrders, setFiltersOrders]} admin={true}/>
                 <div className={cl.main}>
                     {isLoading ? <Loader/> :
                         <>

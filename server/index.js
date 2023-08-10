@@ -7,10 +7,11 @@ const router = require('./routes/index.js');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const CLIENT = process.env.CLIENT_URL
-app.use(cors({
-    origin: CLIENT,
-    optionsSuccessStatus: 200
-}));
+// app.use(cors({
+//     origin: CLIENT,
+//     optionsSuccessStatus: 200
+// }));
+app.use(cors())
 app.use(express.json());
 app.use('/images', express.static('images'));
 app.use(fileUpload({}));
@@ -26,7 +27,7 @@ const startApp = async () => {
     try {
         await sequelize.authenticate();
         await sequelize.sync();
-        app.listen(PORT, '192.168.0.223', () => {
+        app.listen(PORT, '192.168.31.200', () => {
             console.log(`Server starting on port ${PORT}`);
         });
     } catch (e) {

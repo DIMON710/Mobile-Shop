@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import cl from './FilterOrders.module.scss';
 import './transitionFilter.scss';
 import {CSSTransition} from "react-transition-group";
-const FilterOrders = ({isOpenFilter, settings}) => {
+const FilterOrders = ({isOpenFilter, settings, admin}) => {
     const refFilter = useRef(null);
     const [filtersOrders, setFiltersOrders] = settings;
     const changeFilter = (title, name, checked) => {
@@ -17,11 +17,17 @@ const FilterOrders = ({isOpenFilter, settings}) => {
                 }
             })
         }
-        changedFilters[index].checked = !changedFilters[index].checked;
+        if (admin) {
+            changedFilters[index].checked = !changedFilters[index].checked;
+        } else {
+            changedFilters[index].checked = true;
+        }
         setFiltersOrders(changedFilters);
-        const filtersObject = changedFilters.filter(filter => filter.checked);
-        const strFiltersObject = JSON.stringify(filtersObject);
-        localStorage.setItem('filter', strFiltersObject)
+        if (admin) {
+            const filtersObject = changedFilters.filter(filter => filter.checked);
+            const strFiltersObject = JSON.stringify(filtersObject);
+            localStorage.setItem('filter', strFiltersObject)
+        }
     }
     return (
         <CSSTransition

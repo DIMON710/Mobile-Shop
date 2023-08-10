@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Admin} from "../../context/index.jsx";
 import {Route, Routes} from "react-router-dom";
 import Main from "../../Pages/Main.jsx";
-import {adminRoutes, myRoutes} from "../../router/index.jsx";
+import {adminRoutes, usersRoutes} from "../../router/index.jsx";
 const AppRouter = () => {
     const [admin, setAdmin] = useContext(Admin);
     const [isLoading, setIsLoading] = useState(true)
@@ -24,7 +24,7 @@ const AppRouter = () => {
                 {admin ? adminRoutes.map((item, index) => {
                     item = {...item, key: index}
                     return item
-                }) : myRoutes.map((item, index) => {
+                }) : usersRoutes.map((item, index) => {
                     item = {...item, key: index}
                     return item
                 })}

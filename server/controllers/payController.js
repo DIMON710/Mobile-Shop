@@ -4,9 +4,32 @@ const public_key = process.env.PUBLIC_KEY
 const private_key = process.env.PRIVATE_KEY
 const CLIENT = process.env.CLIENT_URL
 const SERVER = process.env.SERVER_URL
+
+const newOrder = async (req, res) => {
+    try {
+        const {amount, description, delivery, img, order_id, fullName, tel} = req.body;
+        const newOrder = await payService.addNew({
+            order_id,
+            description,
+            fullName,
+            tel,
+            currency: 'UAH',
+            amount,
+            status: 'receipt',
+            date: Date.now(),
+            delivery,
+            img
+        });
+        console.log(newOrder)
+        res.sendStatus(201);
+    } catch (e) {
+        console.error(e)
+        res.send(e)
+    }
+}
 const pay = async (req, res) => {
     try {
-        const {amount, description, delivery, img, order_id} = req.body;
+        const {amount, description, delivery, img, order_id, fullName, tel} = req.body;
         const liqpay = new LiqPay(public_key, private_key)
         const params = {
             action: 'pay',
@@ -22,6 +45,8 @@ const pay = async (req, res) => {
         const newOrder = await payService.addNew({
             order_id,
             description,
+            fullName,
+            tel,
             currency: 'UAH',
             amount,
             status: 'processing',
@@ -123,4 +148,4 @@ const getOrders = async (req, res) => {
         return res.send(e)
     }
 }
-module.exports = {pay, checkPay, getAllOrders, getOrders, changeOrder, getStatus, filterOrders}
+module.exports = {pay, checkPay, getAllOrders, getOrders, changeOrder, getStatus, filterOrders, newOrder}

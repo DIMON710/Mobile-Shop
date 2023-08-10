@@ -10,8 +10,8 @@ import Delivery from "./Delivery/Delivery.jsx";
 import PayMeth from "./PayMeth/PayMeth.jsx";
 import {CSSTransition, SwitchTransition} from "react-transition-group";
 const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
-    const [basket] = useContext(BasketProduct);
-    const [contacts, setContacts] = useState({firstName: '', secondName: '', tel: '', email: ''});
+    const [basket, setBasket] = useContext(BasketProduct);
+    const [contacts, setContacts] = useState({firstName: '', secondName: '', tel: '', surname: ''});
     const [delivery, setDelivery] = useState({city: 'Харьков', house: '', street: '', flat: '', building: ''});
     const [payMeth, setPayMeth] = useState('');
 
@@ -19,15 +19,23 @@ const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
     const pay = (e) => {
         e.preventDefault();
         if (isInvalid.contacts || isInvalid.delivery || isInvalid.payMeth) return
+
         const order_id = v4()
         localStorage.setItem('order', order_id)
         const description = basket.reduce((sum, product) => sum += `${product.title}${product.quantity > 1 ? ` (${product.quantity}шт)` : ''}, `, '').slice(0, -2);
         const newDelivery = `г. ${delivery.city}, ул. ${delivery.street}, д. ${delivery.house},${delivery.building !== '' ? ' к. ' + delivery.building + ',' : ''} кв. ${delivery.flat}`;
         const img = basket.map(product => product.img)
-        productsServices.pay({amount: total, description, delivery: newDelivery, img, order_id}).then(r => {
-            setIsOpenOrder(false)
-            window.open(r.data, '_blank');
-        })
+        if (payMeth === 'card') {
+            productsServices.pay({amount: total, description, delivery: newDelivery, img, order_id, fullName: `${contacts.firstName} ${contacts.secondName} ${contacts.surname}`, tel: contacts.tel}).then(r => {
+                setIsOpenOrder(false)
+                window.open(r.data, '_blank');
+            })
+        } else if (payMeth === 'receipt') {
+            productsServices.newOrder({amount: total, description, delivery: newDelivery, img, order_id, fullName: `${contacts.firstName} ${contacts.secondName} ${contacts.surname}`, tel: contacts.tel}).then(r => {
+                setBasket([]);
+                setIsOpenOrder(false)
+            });
+        }
     }
     const [checked, setChecked] = useState('contacts')
     const menu = [

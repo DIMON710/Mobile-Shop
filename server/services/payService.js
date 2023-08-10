@@ -45,8 +45,8 @@ const filterOrders = async (params, page) => {
         page = page || 1
         const limit = 10;
         const offset = page * limit - limit
-        if (params.status && params.status !== 'success') {
-            params.status = {[Op.ne]: 'success'};
+        if (params.status && params.status !== 'processing') {
+            params.status = {[Op.ne]: 'processing'};
         }
         console.log(params)
         return await Orders.findAndCountAll({order: [['date', 'DESC']], where: {...params}, limit, offset})

@@ -4,7 +4,7 @@ import ProductPage from "../Pages/ProductPage/ProductPage.jsx";
 import Orders from "../Pages/Orders/Orders.jsx";
 import AdminAuth from "../Pages/AdminAuth/AdminAuth.jsx";
 
-export const myRoutes = [
+export const usersRoutes = [
     <Route index element={<Catalog/>}></Route>,
     <Route path="/:page" element={<Catalog/>}></Route>,
     <Route path="admin" element={<AdminAuth/>}></Route>,

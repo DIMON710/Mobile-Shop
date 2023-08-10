@@ -8,12 +8,12 @@ const Contacts = ({Contacts, IsInvalid, Checked}) => {
     const firstNameRef = useRef(null)
     const secondNameRef = useRef(null)
     const telNameRef = useRef(null)
-    const emailNameRef = useRef(null)
+    const surnameNameRef = useRef(null)
     const buttonRef = useRef(null)
     const invalidName = curr => curr.value === '' || curr.value.length < 2 || curr.value.split('').find(el => !isNaN(el)) !== undefined;
-    const invalidEmail = curr => curr.value === '';
+    const invalidSurname = curr => curr.value === '';
     const invalidTel = curr => curr.value.length !== 19;
-    const currentCheck = () => !invalidName(firstNameRef.current) && !invalidName(secondNameRef.current) && !invalidEmail(emailNameRef.current) && !invalidTel(telNameRef.current)
+    const currentCheck = () => !invalidName(firstNameRef.current) && !invalidName(secondNameRef.current) && !invalidSurname(surnameNameRef.current) && !invalidTel(telNameRef.current)
     const handleInput = (curr, name, func) => {
         setContacts(prevState => ({...prevState, [name]: curr.value}))
         if (!func(curr)) {
@@ -54,16 +54,27 @@ const Contacts = ({Contacts, IsInvalid, Checked}) => {
                     ref={firstNameRef}
                     type="text"
                 /></label>
-                <label>Фамилия <input
-                    value={contacts.secondName}
-                    name="secondName"
-                    ref={secondNameRef}
-                    onChange={e => handleInput(e.target, 'secondName', invalidName)}
-                    onBlur={e => blurInput(e.target, invalidName)}
-                    type="text"
-                /></label>
+                <label>
+                    Фамилия
+                    <input
+                        value={contacts.secondName}
+                        name="secondName"
+                        ref={secondNameRef}
+                        onChange={e => handleInput(e.target, 'secondName', invalidName)}
+                        onBlur={e => blurInput(e.target, invalidName)}
+                        type="text"
+                     />
+                </label>
             </div>
             <div>
+                <label>Отчество <input
+                    onChange={e => handleInput(e.target, 'surname', invalidSurname)}
+                    onBlur={e => blurInput(e.target, invalidSurname)}
+                    value={contacts.surname}
+                    name="surname"
+                    ref={surnameNameRef}
+                    type="text"
+                /></label>
                 <label>Номер телефона <InputMask
                     type="tel"
                     mask="+380 (99) 999-99-99"
@@ -78,13 +89,6 @@ const Contacts = ({Contacts, IsInvalid, Checked}) => {
                         }
                     }}
                     onBlur={e => blurInput(e.target, invalidTel)}
-                /></label>
-                <label>Электронная почта <input
-                    onChange={e => handleInput(e.target, 'email', invalidEmail)}
-                    onBlur={e => blurInput(e.target, invalidEmail)}
-                    value={contacts.email}
-                    ref={emailNameRef}
-                    type="email"
                 /></label>
             </div>
             <button ref={buttonRef}>Сохранить</button>
