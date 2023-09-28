@@ -9,7 +9,7 @@ import {CSSTransition, TransitionGroup} from "react-transition-group";
 import productsServices from "../../../../API/productsServices.js";
 import Loader from "../../../UI/Loader/Loader.jsx";
 import OrderClient from "./OrderClient/OrderClient.jsx";
-const Basket = () => {
+const Basket = ({notify}) => {
     const [active, setActive] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isOpenOrder, setIsOpenOrder] = useState(false);
@@ -112,7 +112,8 @@ const Basket = () => {
                 timeout={300}
                 unmountOnExit
             >
-                <OrderClient refOrder={refOrder} setIsOpenOrder={setIsOpenOrder} total={total}/>
+                <OrderClient notify={notify} refOrder={refOrder} setIsOpenOrder={setIsOpenOrder} total={total}/>
+
             </CSSTransition>
         </>
     );

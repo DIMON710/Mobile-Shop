@@ -9,17 +9,15 @@ import Contacts from "./Contacts/Contacts.jsx";
 import Delivery from "./Delivery/Delivery.jsx";
 import PayMeth from "./PayMeth/PayMeth.jsx";
 import {CSSTransition, SwitchTransition} from "react-transition-group";
-const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
+const OrderClient = ({total, setIsOpenOrder, refOrder, notify}) => {
     const [basket, setBasket] = useContext(BasketProduct);
     const [contacts, setContacts] = useState({firstName: '', secondName: '', tel: '', surname: ''});
     const [delivery, setDelivery] = useState({city: 'Харьков', house: '', street: '', flat: '', building: ''});
     const [payMeth, setPayMeth] = useState('');
-
     const [isInvalid, setIsInvalid] = useState({contacts: true, delivery: true, payMeth: true})
     const pay = (e) => {
         e.preventDefault();
         if (isInvalid.contacts || isInvalid.delivery || isInvalid.payMeth) return
-
         const order_id = v4()
         localStorage.setItem('order', order_id)
         const description = basket.reduce((sum, product) => sum += `${product.title}${product.quantity > 1 ? ` (${product.quantity}шт)` : ''}, `, '').slice(0, -2);
@@ -35,6 +33,7 @@ const OrderClient = ({total, setIsOpenOrder, refOrder}) => {
                 setBasket([]);
                 setIsOpenOrder(false)
             });
+            notify()
         }
     }
     const [checked, setChecked] = useState('contacts')
