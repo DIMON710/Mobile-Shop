@@ -39,7 +39,7 @@ const pay = async (req, res) => {
             order_id,
             version: '3',
             server_url: `${SERVER}/pay/check/${order_id}`,
-            result_url: `${CLIENT}/1`
+            result_url: `${CLIENT}/#/1`
         }
         const obj = liqpay.cnb_object(params);
         const newOrder = await payService.addNew({
